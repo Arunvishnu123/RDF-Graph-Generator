@@ -2,18 +2,18 @@
 <div>
     <w-app>
         <div class="generate">
-            
-                <w-button class="saveButton" bg-color="info-dark2" color="white" :loading="button2loading" @click="buttonDoLoading(2)">
-                    <w-icon class="mr1">wi-check</w-icon>
-                    Save
-                    <template #loading>Loading...</template>
-                </w-button>
 
-                <w-button class="generteButton" id="started" bg-color="info-dark2" color="white">
-                    Generate RDF Graph
-                    <w-icon class="ml1">wi-chevron-right</w-icon>
-                </w-button>
-           
+            <w-button class="saveButton" bg-color="info-dark2" color="white" :loading="button2loading" @click="buttonDoLoading(2)">
+                <w-icon class="mr1">wi-check</w-icon>
+                Save
+                <template #loading>Loading...</template>
+            </w-button>
+
+            <w-button class="generteButton" id="started" bg-color="info-dark2" color="white">
+                Generate RDF Graph
+                <w-icon class="ml1">wi-chevron-right</w-icon>
+            </w-button>
+
         </div>
         <w-divider class="divider1" color="info-dark2" />
     </w-app>
@@ -37,22 +37,22 @@ export default {
 </script>
 
 <style>
+.generteButton {
 
-.generteButton{
-    
- position: absolute;
-left:786px
+    position: relative;
+    left: 786px
 }
-.saveButton{
 
- position: absolute;
- left:770px
+.saveButton {
+
+    position: relative;
+    left: 770px
 }
 
 .divider1 {
     position: relative;
     left: 1px;
     top: 70px;
-    width:1020px;
+    width: 1020px;
 }
 </style>

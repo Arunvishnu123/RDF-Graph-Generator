@@ -63,16 +63,16 @@ export default {
 }
 
 .ComponentB {
-    position: absolute;
-    left: 13px;
-    top: 525px;
+    position: relative;
+    left: 30px;
+    top:-500px;
 }
 
 .tableComponent {
     position: relative;
     left: 13px;
     top: -500px;
-    padding-right:20px
+    padding-right:10px
 }
 
 .image {
