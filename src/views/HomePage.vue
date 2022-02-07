@@ -9,15 +9,20 @@
 <div>
     <LoginComponent />
 </div>
+<div>
+    <RegisterComponent />
+</div>
 
 </div>
 </template>
 
 <script>
 import LoginComponent from "../components/LoginComponent.vue";
+import RegisterComponent from "../components/RegisterComponent.vue";
 export default {
  components: {
-        LoginComponent
+        LoginComponent,
+        RegisterComponent
     },
 
 }
