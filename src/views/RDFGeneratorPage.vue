@@ -15,14 +15,18 @@
                             <RDFGeneratorA />
                         </div>
                         <div class="tableComponent">
-
                             <TableComponent />
                         </div>
                         <div class="ComponentB">
                             <RDFGeneratorB />
                         </div>
+                       
                     </pane>
-                    <pane :size="100 - paneSize"> </pane>
+                    <pane :size="100 - paneSize"> 
+                         <div class="display">
+                            <RDFGeneratorDisplayComponent />
+                        </div>
+                    </pane>
                 </splitpanes>
             </div>
         </div>
@@ -34,6 +38,7 @@
 import RDFGeneratorA from "../components/RDFGeneratorComponentA.vue";
 import RDFGeneratorB from "../components/RDFGeneratorComponentB.vue";
 import TableComponent from "../components/TableComponent.vue";
+import RDFGeneratorDisplayComponent from "../components/RDFGeneratorDisplayComponent.vue";
 import {
     Splitpanes,
     Pane
@@ -45,11 +50,13 @@ export default {
         Splitpanes,
         Pane,
         TableComponent,
-        RDFGeneratorB
+        RDFGeneratorB,
+        RDFGeneratorDisplayComponent,
     },
     data() {
         return {
             paneSize: 70,
+           
         };
     },
 };
@@ -65,14 +72,14 @@ export default {
 .ComponentB {
     position: relative;
     left: 30px;
-    top:-500px;
+    top: -500px;
 }
 
 .tableComponent {
     position: relative;
     left: 13px;
     top: -500px;
-    padding-right:10px
+    padding-right: 10px;
 }
 
 .image {
@@ -97,5 +104,9 @@ export default {
     color: #2872e2;
     margin-top: -23px;
     margin-left: -15px;
+}
+.display{
+    position: relative;
+    top:0px
 }
 </style>

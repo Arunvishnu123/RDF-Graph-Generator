@@ -35,8 +35,21 @@
     </div>
 </w-app>
 </template>
-<script>
 
+<script>
+export default {
+    name: "RDFGeneratorDisplayComponent",
+    computed: {
+        position() {
+            return this.openDrawer || "right";
+        },
+        data() {
+            return {
+                openDrawer: false,
+            };
+        },
+    },
+};
 </script>
 
 <style scoped>
@@ -59,8 +72,8 @@
 
 .bnavbar {
     position: absolute;
-    left: 1480px;
-    top: 15px;
+    left: 415px;
+    top: 12px;
 }
 
 .home {
@@ -91,4 +104,3 @@
     top: 0px;
 }
 </style>
-

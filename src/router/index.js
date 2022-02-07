@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import RDFGenerate from "../views/RDFGeneratorPage.vue";
+import Main from "../views/MainPage.vue";
 const routes = [
   {
     path: "/",
@@ -11,6 +12,11 @@ const routes = [
     path: "/RDFGenerate",
     name: "RDFGenerate",
     component: RDFGenerate,
+  },
+  {
+    path: "/Main",
+    name: "Main",
+    component: Main,
   },
 
 ];
