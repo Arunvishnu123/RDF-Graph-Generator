@@ -41,9 +41,6 @@
                             <w-input type="date">Date of Birth</w-input>
 
                             <w-flex class="mt2" wrap align-center justify-end>
-                                <w-checkbox required :validators="[validators.consent]">
-                                    I agree to the terms & conditions
-                                </w-checkbox>
                                 <div class="spacer" />
 
                                 <w-button class="my1 mr2" bg-color="warning" type="reset" @click="form.submitted = form.sent = false">

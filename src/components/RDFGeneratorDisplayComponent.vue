@@ -6,7 +6,7 @@
                 Generated RDF Graph
             </w-tag>
         </w-flex>
-        <w-button class="bnavbar" @click="openDrawer = 'right'" outline>
+        <w-button bg-color="white" class="bnavbar" @click="openDrawer = 'right'" outline>
             <i class="fa fa-bars" aria-hidden="true"></i>
         </w-button>
         <w-drawer v-model="openDrawer" :[position]="true">
@@ -38,16 +38,17 @@
 
 <script>
 export default {
+
     name: "RDFGeneratorDisplayComponent",
+    data: () => ({
+        openDrawer: false
+    }),
+
     computed: {
         position() {
             return this.openDrawer || "right";
         },
-        data() {
-            return {
-                openDrawer: false,
-            };
-        },
+
     },
 };
 </script>

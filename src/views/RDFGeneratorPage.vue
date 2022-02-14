@@ -70,9 +70,9 @@ export default {
 }
 
 .ComponentB {
-    position: relative;
-    left: 30px;
-    top: -500px;
+    position: absolute;
+    left: 29px;
+    top:520px;
 }
 
 .tableComponent {
