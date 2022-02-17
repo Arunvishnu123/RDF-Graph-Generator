@@ -16,13 +16,7 @@
                         </div>
                     </pane>
                     <pane>
-                        <w-flex>
-                            <w-tag class="signout grow" outline bg-color="info-dark2" color="white" xl width="10em" height="3em">
-                                Registered Users List
-                            </w-tag>
-                        </w-flex>
-
-                        <w-table :headers="table.headers" :items="table.items"> </w-table>
+                        <RegisteredUsersListComponent />
                     </pane>
                 </splitpanes>
             </pane>
@@ -81,68 +75,17 @@ import {
 import "splitpanes/dist/splitpanes.css";
 import NavBarMain from "../components/NavBarMainComponent.vue";
 import LoggedUser from "../components/LoggedUserComponent.vue";
+import RegisteredUsersListComponent from "../components/RegisteredUsersListComponent.vue";
 export default {
     components: {
         Splitpanes,
         Pane,
         NavBarMain,
         LoggedUser,
+        RegisteredUsersListComponent
     },
     data: () => ({
         hidePane2: true,
-        table: {
-            headers: [{
-                    label: "ID",
-                    key: "id",
-                },
-                {
-                    label: "Name",
-                    key: "firstName",
-                    align: "center",
-                },
-                {
-                    label: "Email",
-                    key: "Email",
-                    align: "center",
-                },
-                {
-                    label: "Date of Birth",
-                    key: "DOB",
-                    align: "center",
-                },
-            ],
-            items: [{
-                    id: 1,
-                    firstName: "Arun Raveendran Nair Sheela",
-                    Email: "Arunvishnu40@gmail.com",
-                    DOB: "26/07/1995",
-                },
-                {
-                    id: 2,
-                    firstName: "Arun Raveendran Nair Sheela",
-                    Email: "Arunvishnu40@gmail.com",
-                    DOB: "26/07/1995",
-                },
-                {
-                    id: 2,
-                    firstName: "Arun Raveendran Nair Sheela",
-                    Email: "Arunvishnu40@gmail.com",
-                    DOB: "26/07/1995",
-                },
-                {
-                    id: 3,
-                    firstName: "Arun Raveendran Nair Sheela",
-                    Email: "Arunvishnu40@gmail.com",
-                    DOB: "26/07/1995",
-                },
-                {
-                    id: 4,
-                    firstName: "Arun Raveendran Nair Sheela",
-                    Email: "Arunvishnu40@gmail.com",
-                    DOB: "26/07/1995",
-                },
-            ],
-        },
         test: null,
     }),
 };
