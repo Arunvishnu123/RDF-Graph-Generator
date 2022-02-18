@@ -79,7 +79,7 @@ import RegisteredUsersListComponent from "../components/RegisteredUsersListCompo
 export default {
     components: {
         Splitpanes,
-        Pane,
+        Pane ,
         NavBarMain,
         LoggedUser,
         RegisteredUsersListComponent
