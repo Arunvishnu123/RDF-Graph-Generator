@@ -14,24 +14,23 @@ userRoute.route('/createusers').post((req, res, next) => {
     })
 });
 
-userRoute.route('/signin').post((req, res) => {
-    if(req.body.email == undefined || req.body.password==undefined){
-        res.status(500).send({error:"Authentication Failed"})
+userRoute.route('/signin').post((req, res, next) => {
+    if (req.body.email == undefined || req.body.password == undefined) {
+        res.status(500).send({ error: "Authentication Failed" })
     }
-    let email = req.body.email 
+    let email = req.body.email
     console.log(email)
     let password = req.body.password
     console.log(password)
-    let query = {email:email}
-    userModel.find(query).toArray((err,result) =>
-    {
-        if (err|| result.length===0){
-            res.status(500).send({errr:"Login Failed"})
-        }else{
-            res.status(200).send({success:"Login Success"})
+    let query = { email:email }
+    userModel.find({query}, (err, result) => {
+        if (err || result.length === 0) {
+            res.status(501).send({ err: "Login Failed" })
+        } else {
+            res.status(200).send({ success: "Login Success",result })
             console.log(result)
         }
     })
- });
+});
 
 module.exports = userRoute;

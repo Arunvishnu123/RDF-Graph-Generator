@@ -6,18 +6,18 @@
             <hr class="line" />
         </div>
         <div>
-            <w-form>
+            <w-form @submit.prevent="loginUser">
                 <div>
                     <div>
                         <w-flex>
-                            <w-input class="email" bg-color="white" color="primary" type="email" label="Email" round>
+                            <w-input v-model="email" class="email" bg-color="white" color="primary" type="email" label="Email" round>
                             </w-input>
                         </w-flex>
                     </div>
                 </div>
                 <div>
                     <w-flex>
-                        <w-input class="password" height="3.5em" bg-color="white" type="password" color="primary" label="Password" round>
+                        <w-input v-model="password" class="password" height="3.5em" bg-color="white" type="password" color="primary" label="Password" round>
                         </w-input>
                     </w-flex>
                 </div>
@@ -33,6 +33,31 @@
 <script>
 export default {
     name: "LoginComponent",
+    computed: {
+          email: {
+            get() {
+                return this.$store.state.lemail;
+            },
+            set(value) {
+                this.$store.commit("lupdateEmail", value);
+            },
+        },
+
+        password: {
+            get() {
+                return this.$store.state.lpassword;
+            },
+            set(value) {
+                this.$store.commit("lupdatePassword", value);
+            },
+        },
+    },
+    methods:{
+        loginUser(){
+            this.$store.dispatch("loginUser");     
+        },
+    }
+
 };
 </script>
 
