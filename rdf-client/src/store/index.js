@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
+import router from '../router'
 
 export default createStore({
   state: {
@@ -13,7 +14,11 @@ export default createStore({
     //sign in 
 
     lemail: null,
-    lpassword: null
+    lpassword: null,
+
+    //login failed
+    showDialog: false
+
   },
   mutations: {
     //register form data update
@@ -41,8 +46,10 @@ export default createStore({
     lupdatePassword(state, lpassword) {
       state.lpassword = lpassword
     },
-
-
+   //show login failed dialog
+   updateShowDialog(state, showDialog) {
+    state.showDialog = showDialog
+  },
 
   },
   actions: {
@@ -65,6 +72,15 @@ export default createStore({
         password: this.state.lpassword
       }).then((response) => {
         console.log(response);
+        console.log(response.data.result)
+        console.log(response.data.success)
+        if (response.data.success === "Login Success"){
+          console.log("dksbkjsdb")
+          router.push('/RDFGenerate')
+        }else{
+          this.state.showDialog =true
+          console.log("login failed")
+        }
       });
     }
 

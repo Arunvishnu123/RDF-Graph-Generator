@@ -5,6 +5,7 @@
             <h1 class="login">Login to Your Account</h1>
             <hr class="line" />
         </div>
+        <LoginFailed />
         <div>
             <w-form @submit.prevent="loginUser">
                 <div>
@@ -25,14 +26,21 @@
                     <w-button type="submit" class="ma1" height="2.3em" bg-color="info-dark2" color="white" round>Sign In</w-button>
                 </div>
             </w-form>
+
         </div>
+        
+        
     </div>
 </w-app>
 </template>
 
 <script>
+import LoginFailed from "./LoginFailed.vue";
 export default {
     name: "LoginComponent",
+    components:{
+     LoginFailed,
+    },
     computed: {
           email: {
             get() {
