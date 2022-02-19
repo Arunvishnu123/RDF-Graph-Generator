@@ -16,18 +16,18 @@ userRoute.route('/createusers').post((req, res, next) => {
 
 userRoute.route('/signin').post((req, res, next) => {
     if (req.body.email == undefined || req.body.password == undefined) {
-        res.status(500).send({ error: "Authentication Failed" })
+        res.status(500).send({ success: "Authentication Failed" })
     }
     let email = req.body.email
     console.log(email)
     let password = req.body.password
     console.log(password)
-    let query = { email:email }
-    userModel.find({query}, (err, result) => {
+    let query = { email: email }
+    userModel.findOne({ email: email }, (err, result) => {
         if (err || result.length === 0) {
-            res.status(501).send({ err: "Login Failed" })
+            res.status(501).send({ success: "Login Failed" })
         } else {
-            res.status(200).send({ success: "Login Success",result })
+            res.status(200).send({ success: "Login Success", result })
             console.log(result)
         }
     })
