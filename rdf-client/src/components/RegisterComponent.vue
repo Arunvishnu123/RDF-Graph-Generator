@@ -25,20 +25,20 @@
                         <w-tag outline color="white" bg-color="info-dark2" no-border xl width="38em" height="3em">
                             User Registration Form
                         </w-tag>
-                        <w-form class="px8 pt2 pb12 pb12 pb12" v-model="form.valid" :errors-count="form.errorsCount" @validate="onValidate" @success="onSuccess">
+                        <w-form @submit.prevent="onSubmit" class="px8 pt2 pb12 pb12 pb12" v-model="form.valid" :errors-count="form.errorsCount" @validate="onValidate" @success="onSuccess">
                             <w-flex class="mt2" wrap align-center justify-end>
-                                <w-input required label="First Name" :validators="[validators.required]">
+                                <w-input v-model="firstName" required label="First Name" :validators="[validators.required]">
                                 </w-input>
 
-                                <w-input class="mt3" required label="Last Name" :validators="[validators.required]">
+                                <w-input v-model="lastName" class="mt3" required label="Last Name" :validators="[validators.required]">
                                 </w-input>
                             </w-flex>
-                            <w-input class="mt3" required label="Email" :validators="[validators.required]">
+                            <w-input v-model="DOB" type="date">Date of Birth</w-input>
+                            <w-input v-model="email" class="mt3" required label="Email" :validators="[validators.required]">
                             </w-input>
 
-                            <w-input type="password" class="mt3" required label="Password" :validators="[validators.required]">
+                            <w-input v-model="password" type="password" class="mt3" required label="Password" :validators="[validators.required]">
                             </w-input>
-                            <w-input type="date">Date of Birth</w-input>
 
                             <w-flex class="mt2" wrap align-center justify-end>
                                 <div class="spacer" />
@@ -85,6 +85,49 @@ export default {
         position() {
             return this.openDrawer || "right";
         },
+        //update and get data of first for registration
+        firstName: {
+            get() {
+                return this.$store.state.firstName;
+            },
+            set(value) {
+                this.$store.commit("updateFirstName", value);
+            },
+        },
+
+        lastName: {
+            get() {
+                return this.$store.state.lastName;
+            },
+            set(value) {
+                this.$store.commit("updateLastName", value);
+            },
+        },
+        DOB: {
+            get() {
+                return this.$store.state.DOB;
+            },
+            set(value) {
+                this.$store.commit("updateDOB", value);
+            },
+        },
+        email: {
+            get() {
+                return this.$store.state.email;
+            },
+            set(value) {
+                this.$store.commit("updateEmail", value);
+            },
+        },
+
+        password: {
+            get() {
+                return this.$store.state.password;
+            },
+            set(value) {
+                this.$store.commit("updatePassword", value);
+            },
+        },
     },
     methods: {
         onSuccess() {
@@ -93,6 +136,10 @@ export default {
         onValidate() {
             this.form.sent = false;
             this.form.submitted = this.form.errorsCount === 0;
+        },
+        onSubmit() {
+            this.$store.dispatch("createUsers");
+            
         },
     },
 };
@@ -174,7 +221,7 @@ export default {
     position: absolute;
     width: 682px;
     height: 183px;
-        left: 895px;
+    left: 895px;
     top: 266px;
     font-family: Asap;
     font-style: normal;
@@ -196,7 +243,7 @@ export default {
     position: absolute;
     width: 682px;
     height: 183px;
-       left: 898px;
+    left: 898px;
     top: 335px;
     font-family: Asap;
     font-style: normal;

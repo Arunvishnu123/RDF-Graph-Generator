@@ -1,8 +1,6 @@
 let express = require('express')
 let mongoose = require('mongoose')
-let bodyParser = require('body-parser');
-let cors = require('cors')
-const userAPI = require('../rdf-server/routes/UserRegistration')
+
 
 
 const app = express()
@@ -18,16 +16,32 @@ mongoose.connect('mongodb://localhost:27017/rdf-graph', {
     console.log("Database could't be connected to: " + error)
   }
 )
+
+let bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
+let cors = require('cors')
+const userAPI = require('../rdf-server/routes/UserRegistration')
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
 app.use(cors());
+app.use(cookieParser())
 
-app.use('/api', userAPI)
+
+app.use('/', userAPI)
 
 
+t=[{
+  name:"arun",
+  age:25,
+}]
+app.get('/test' ,(req,res)=>{
+ res.json(t)
+})
 
 // Create port
 const port = process.env.PORT || 4000;
