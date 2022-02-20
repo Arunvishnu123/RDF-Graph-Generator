@@ -7,7 +7,7 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h2>File <b>Name</b></h2>
+                                <h2>{{$store.state.fileName}}</h2>
                             </div>
                             <div class="col-sm-6">
                                 <w-flex>

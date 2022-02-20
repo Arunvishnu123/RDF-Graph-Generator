@@ -21,6 +21,7 @@ let bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 let cors = require('cors')
 const userAPI = require('../rdf-server/routes/UserRegistration')
+const rdfAPI = require('../rdf-server/routes/RDFData')
 
 
 app.use(bodyParser.json());
@@ -33,6 +34,7 @@ app.use(cookieParser())
 
 
 app.use('/', userAPI)
+app.use('/', rdfAPI)
 
 
 t=[{

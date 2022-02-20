@@ -23,7 +23,7 @@ userRoute.route('/signin').post((req, res, next) => {
     let password = req.body.password
     console.log(password)
     let query = { email: email }
-    userModel.findOne( {'email': email,'password':password}, (err, result) => {
+    userModel.findOne({ 'email': email, 'password': password }, (err, result) => {
         if (err || result === null) {
             res.send({ success: "Login Failed" })
         } else {

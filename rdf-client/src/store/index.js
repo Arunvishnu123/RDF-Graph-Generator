@@ -17,7 +17,14 @@ export default createStore({
     lpassword: null,
 
     //login failed
-    showDialog: false
+    showDialog: false,
+
+    //file Name
+    fileName: "File Name",
+    node0:null,
+    node1:null,
+    node2:null,
+    comment:null
 
   },
   mutations: {
@@ -46,10 +53,15 @@ export default createStore({
     lupdatePassword(state, lpassword) {
       state.lpassword = lpassword
     },
-   //show login failed dialog
-   updateShowDialog(state, showDialog) {
-    state.showDialog = showDialog
-  },
+    //show login failed dialog
+    updateShowDialog(state, showDialog) {
+      state.showDialog = showDialog
+    },
+
+    //new file name 
+    updateFileName(state, fileName) {
+      state.fileName = fileName
+    },
 
   },
   actions: {
@@ -74,14 +86,27 @@ export default createStore({
         console.log(response);
         console.log(response.data.result)
         console.log(response.data.success)
-        if (response.data.success === "Login Success"){
+        if (response.data.success === "Login Success") {
           console.log("dksbkjsdb")
           router.push('/RDFGenerate')
-        }else{
-          this.state.showDialog =true
+        } else {
+          this.state.showDialog = true
           console.log("login failed")
         }
       });
+    },
+    newFile(){
+      axios.post("http://localhost:4000/createfile",{
+        fileName:this.state.fileName,
+        node0:this.state.node0,
+        node1:this.state.node1,
+        node2:this.state.node2,
+        node3:this.state.comment
+      }).then((response)=>{
+        console.log(response)
+        console.log("jsdjsnjsdnjsdjds")
+      });
+
     }
 
 
