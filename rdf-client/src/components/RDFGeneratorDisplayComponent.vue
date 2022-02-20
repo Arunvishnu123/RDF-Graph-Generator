@@ -60,7 +60,7 @@ export default {
     font-weight: bold;
     font-size: 20px;
     top: 10px;
-    height: 598px;
+    height: 610px;
 }
 
 .download {
@@ -68,7 +68,7 @@ export default {
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
-    top:25px;
+    top:21px;
 }
 
 .bnavbar {

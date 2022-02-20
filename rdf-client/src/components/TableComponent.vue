@@ -28,9 +28,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Node 0</th>
-                                <th>Node 1</th>
-                                <th>Node 2</th>
+                                <th>Subject</th>
+                                <th>Predicate</th>
+                                <th>Object</th>
                                 <th>Comments</th>
                                 <th>Actions</th>
                             </tr>
@@ -88,15 +88,15 @@
                     </w-input>
                 </div>
                 <div class="form-group">
-                    <w-input v-model="node0" required class="mb3" label="Node 0" color="info" outline>
+                    <w-input v-model="node0" required class="mb3" label="Subject" color="info" outline>
                     </w-input>
                 </div>
                 <div class="form-group">
-                    <w-input v-model="node1" required  class="mb3" label="Node 1" color="info" outline>
+                    <w-input v-model="node1" required  class="mb3" label="Predicate" color="info" outline>
                     </w-input>
                 </div>
                 <div class="form-group">
-                    <w-input v-model="node2" required  class="mb3" label="Node 2" color="info" outline>
+                    <w-input v-model="node2" required  class="mb3" label="Object" color="info" outline>
                     </w-input>
                 </div>
                 <div class="form-group">

@@ -15,10 +15,10 @@
                 </w-input>
             </w-flex>
             <w-flex>
-            <w-button class="Upload grow" bg-color="info-dark2" color="white">
-                Upload Data
-                <w-icon class="ml1">wi-chevron-right</w-icon>
-            </w-button>
+                <w-button id="Upload" class="grow" bg-color="info-dark2" color="white">
+                    Upload Data
+                    <w-icon class="ml1">wi-chevron-right</w-icon>
+                </w-button>
             </w-flex>
         </div>
         <div>
@@ -81,7 +81,7 @@ export default {
 #started {
     position: relative;
     left: 28px;
-    top: 5px;
+    top: -30px;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -91,7 +91,7 @@ export default {
 #started1 {
     position: relative;
     left: 44px;
-    top: 5px;
+    top: -30px;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -109,10 +109,13 @@ export default {
     padding-right: 50px;
     padding-top: 30px;
     padding-bottom: 30px;
+    top: -68px;
 }
 
-.upload {
+#Upload{
     position: relative;
+    top: -83px;
+     padding-left: 30px;
     padding-right: 50px;
 }
 

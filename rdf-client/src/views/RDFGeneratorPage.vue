@@ -72,8 +72,9 @@ export default {
 .tableComponent {
     position: relative;
     left: 13px;
-    top: -450px;
-    padding-right: 10px;
+    top: -545px;
+    padding-right: 23px;
+    
 }
 
 .image {
