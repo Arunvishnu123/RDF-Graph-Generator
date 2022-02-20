@@ -7,7 +7,9 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h2>{{ $store.state.fileName }}</h2>
+                                <w-flex>
+                                    <h2>{{ $store.state.fileName }}</h2>
+                                </w-flex>
                             </div>
                             <div class="col-sm-6">
                                 <w-flex>
@@ -36,16 +38,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="data in $store.state.rdfData" :key="data.id">
-                                <td>{{data.num}}</td>
-                                <td>{{data.node0}}</td>
-                                <td>{{data.node1}}</td>
-                                <td>{{data.node2}}</td>
-                                <td>{{data.comment}}</td>
+                            <tr v-for="data in rdfgraph" :key="data.id">
+                                <td>{{ data.num }}</td>
+                                <td>{{ data.node0 }}</td>
+                                <td>{{ data.node1 }}</td>
+                                <td>{{ data.node2 }}</td>
+                                <td>{{ data.comment }}</td>
                                 <td>
-                                    <w-flex justify-center align-center class="wrapper">
+                                    <w-flex class="wrapper">
                                         <w-button color="success" icon="fa fa-pencil-square-o" @click="dialog1.show = true">
                                         </w-button>
+
                                         <span> </span>
                                         <w-confirm question="Are you sure you want to delete this?" @confirm="test" color="error" icon="mdi mdi-delete">
                                             Delete
@@ -57,19 +60,23 @@
                     </table>
                     <div class="clearfix">
                         <div class="hint-text">
-                            Showing <b>5</b> out of <b>25</b> entries
+                            Showing <b>{{ page1 }}</b> out of <b>25</b> entries
                         </div>
                         <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active">
-                                <a href="#" class="page-link">3</a>
+                            <li class="page-item" v-bind:class="{ active: isActive1 }">
+                                <button @click="pageNumber1()" class="page-link">1</button>
                             </li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item">
-                                <a href="#" class="page-link">Next</a>
+                            <li class="page-item" v-bind:class="{ active: isActive2 }">
+                                <button @click="pageNumber2()" class="page-link">2</button>
+                            </li>
+                            <li class="page-item" v-bind:class="{ active: isActive3 }">
+                                <button @click="pageNumber3()" class="page-link">3</button>
+                            </li>
+                            <li class="page-item" v-bind:class="{ active: isActive4 }">
+                                <button @click="pageNumber4()" class="page-link">4</button>
+                            </li>
+                            <li class="page-item" v-bind:class="{ active: isActive5 }">
+                                <button @click="pageNumber5()" class="page-link">5</button>
                             </li>
                         </ul>
                     </div>
@@ -92,11 +99,11 @@
                     </w-input>
                 </div>
                 <div class="form-group">
-                    <w-input v-model="node1" required  class="mb3" label="Predicate" color="info" outline>
+                    <w-input v-model="node1" required class="mb3" label="Predicate" color="info" outline>
                     </w-input>
                 </div>
                 <div class="form-group">
-                    <w-input v-model="node2" required  class="mb3" label="Object" color="info" outline>
+                    <w-input v-model="node2" required class="mb3" label="Object" color="info" outline>
                     </w-input>
                 </div>
                 <div class="form-group">
@@ -170,6 +177,12 @@ export default {
         },
         button1loading: false,
         button2loading: false,
+        rdfgraph: null,
+        isActive1: false,
+        isActive2: false,
+        isActive3: false,
+        isActive4: false,
+        isActive5: false,
     }),
     methods: {
         buttonDoLoading(id) {
@@ -179,12 +192,64 @@ export default {
         test() {
             console.log("pront");
         },
-        newFile(){
+        newFile() {
             this.$store.dispatch("newFile");
-            this.$store.dispatch("getDataFile")
-        }
+            this.$store.dispatch("getDataFile");
+        },
+        changeColor() {
+            this.color = "blue";
+        },
+        pageNumber1() {
+            this.rdfgraph = this.$store.state.rdfData.slice(0, 5);
+            this.page1 = "1 - 5";
+            this.isActive1 = true;
+            this.isActive3 = false;
+            this.isActive4 =false;
+            this.isActive2 =false;
+            this.isActive5 = false;
+        },
+
+        pageNumber2() {
+            this.rdfgraph = this.$store.state.rdfData.slice(5, 10);
+            this.page1 = "6 - 10";
+            this.isActive2 = true;
+            this.isActive3 = false;
+            this.isActive4 =false;
+            this.isActive1 =false;
+            this.isActive5 = false;
+        },
+        pageNumber3() {
+            this.rdfgraph = this.$store.state.rdfData.slice(10, 15);
+            this.page1 = "11 - 15";
+            this.isActive3 = true;
+            this.isActive1 = false;
+            this.isActive4 =false;
+            this.isActive2 =false;
+            this.isActive5 = false;
+        },
+        pageNumber4() {
+            this.rdfgraph = this.$store.state.rdfData.slice(15, 20);
+            this.page1 = "16 - 20";
+            this.isActive4 = true;
+            this.isActive3 = false;
+            this.isActive1 =false;
+            this.isActive2 =false;
+            this.isActive5 = false;
+        },
+        pageNumber5() {
+            this.rdfgraph = this.$store.state.rdfData.slice(20, 2);
+            this.page1 = "21 - 25";
+            this.isActive5 = true;
+            this.isActive3 = false;
+            this.isActive4 =false;
+            this.isActive2 =false;
+            this.isActive1 = false;
+        },
     },
     computed: {
+        computedColor: function () {
+            return this.color;
+        },
         id: {
             get() {
                 return this.$store.state.id;
@@ -238,6 +303,12 @@ body {
     background: #f5f5f5;
     font-family: "Varela Round", sans-serif;
     font-size: 13px;
+}
+
+.refresh {
+    position: relative;
+    left: -1000px;
+    top: -1000px;
 }
 
 .wrapper {

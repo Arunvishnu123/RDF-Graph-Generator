@@ -31,7 +31,7 @@ export default {
 
 <style>
 .generteButton {
-    top: -762px;
+    top: -750px;
 }
 
 .divider1 {
