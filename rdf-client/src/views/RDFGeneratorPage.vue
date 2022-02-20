@@ -69,16 +69,10 @@ export default {
     top: 120px;
 }
 
-.ComponentB {
-    position: absolute;
-    left: 29px;
-    top:520px;
-}
-
 .tableComponent {
     position: relative;
     left: 13px;
-    top: -500px;
+    top: -450px;
     padding-right: 10px;
 }
 

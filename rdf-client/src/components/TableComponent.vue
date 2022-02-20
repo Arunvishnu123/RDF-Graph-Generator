@@ -7,19 +7,19 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h2>{{$store.state.fileName}}</h2>
+                                <h2>{{ $store.state.fileName }}</h2>
                             </div>
                             <div class="col-sm-6">
                                 <w-flex>
                                     <w-tooltip top>
                                         <template #activator="{ on }">
-                                            <w-button v-on="on" bg-color="info-dark2" class=" test px2" @click="dialog.show = true">
+                                            <w-button v-on="on" bg-color="info-dark2" class="test px2" @click="dialog.show = true">
                                                 Add New Triple
                                             </w-button>
                                         </template>
                                         Click here to add new triple
                                     </w-tooltip>
-                                    <w-confirm question="Are you sure you want to delete the entrie file?" class=" test1 px2" bg-color="red">Delete</w-confirm>
+                                    <w-confirm question="Are you sure you want to delete the entrie file?" class="test1 px2" bg-color="red">Delete</w-confirm>
                                 </w-flex>
                             </div>
                         </div>
@@ -47,7 +47,9 @@
                                         <w-button color="success" icon="fa fa-pencil-square-o" @click="dialog1.show = true">
                                         </w-button>
                                         <span> </span>
-                                        <w-confirm question="Are you sure you want to delete this?" @confirm="test" color="error" icon="mdi mdi-delete"> Delete </w-confirm>
+                                        <w-confirm question="Are you sure you want to delete this?" @confirm="test" color="error" icon="mdi mdi-delete">
+                                            Delete
+                                        </w-confirm>
                                     </w-flex>
                                 </td>
                             </tr>
@@ -80,30 +82,36 @@
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
                 Add Data
             </template>
-            <div class="form-group">
-                <w-input class="mb3" label="ID" color="info" outline> </w-input>
-            </div>
-            <div class="form-group">
-                <w-input class="mb3" label="Node 0" color="info" outline> </w-input>
-            </div>
-            <div class="form-group">
-                <w-input class="mb3" label="Node 1" color="info" outline> </w-input>
-            </div>
-            <div class="form-group">
-                <w-input class="mb3" label="Node 2" color="info" outline> </w-input>
-            </div>
-            <div class="form-group">
-                <w-textarea class="mt4" outline color="blue"> Comments </w-textarea>
-            </div>
+            <w-form @submit.prevent="newFile">
+                <div class="form-group">
+                    <w-input v-model="ID" required class="mb3" label="ID" color="info" outline>
+                    </w-input>
+                </div>
+                <div class="form-group">
+                    <w-input v-model="node0" required class="mb3" label="Node 0" color="info" outline>
+                    </w-input>
+                </div>
+                <div class="form-group">
+                    <w-input v-model="node1" required  class="mb3" label="Node 1" color="info" outline>
+                    </w-input>
+                </div>
+                <div class="form-group">
+                    <w-input v-model="node2" required  class="mb3" label="Node 2" color="info" outline>
+                    </w-input>
+                </div>
+                <div class="form-group">
+                    <w-textarea v-model="comment" required class="mt4" outline color="blue">
+                        Comments
+                    </w-textarea>
+                </div>
 
-            <template #actions>
                 <div class="spacer" />
                 <w-button @click="dialog.show = false">Close</w-button>
-                <w-button class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
+                <w-button type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
                     <w-icon class="mr1">wi-check</w-icon>
                     Save
                 </w-button>
-            </template>
+            </w-form>
         </w-dialog>
         <!-- Edit Modal HTML -->
         <w-dialog v-model="dialog1.show" :fullscreen="dialog1.fullscreen" :width="dialog.width" :persistent="dialog1.persistent" :persistent-no-animation="dialog1.persistentNoAnimation" title-class="primary-light1--bg white">
@@ -169,8 +177,57 @@ export default {
             setTimeout(() => (this[`button${id}loading`] = false), 3000);
         },
         test() {
-            console.log("pront")
+            console.log("pront");
+        },
+        newFile(){
+            this.$store.dispatch("newFile");
+            this.$store.dispatch("getDataFile")
         }
+    },
+    computed: {
+        ID: {
+            get() {
+                return this.$store.state.ID;
+            },
+            set(value) {
+                this.$store.commit("updateID", value);
+            },
+        },
+
+        node0: {
+            get() {
+                return this.$store.state.node0;
+            },
+            set(value) {
+                this.$store.commit("updateNode0", value);
+            },
+        },
+
+        node1: {
+            get() {
+                return this.$store.state.node1;
+            },
+            set(value) {
+                this.$store.commit("updateNode1", value);
+            },
+        },
+
+        node2: {
+            get() {
+                return this.$store.state.node2;
+            },
+            set(value) {
+                this.$store.commit("updateNode2", value);
+            },
+        },
+        comment: {
+            get() {
+                return this.$store.state.comment;
+            },
+            set(value) {
+                this.$store.commit("updateComment", value);
+            },
+        },
     },
 };
 </script>
@@ -195,7 +252,6 @@ body {
     font-style: normal;
     font-weight: normal;
     font-size: 15px;
-
 }
 
 .test1 {

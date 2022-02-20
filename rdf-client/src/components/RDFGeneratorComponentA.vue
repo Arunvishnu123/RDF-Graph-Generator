@@ -10,8 +10,16 @@
                 Existing Document
                 <w-icon class="ml1">wi-chevron-right</w-icon>
             </w-button>
-            <w-input class="fileupload" type="file" label="File Upload" accept=".jpg, .jpeg, .png, .gif, .svg" multiple>
-            </w-input>
+            <w-flex>
+                <w-input class="fileupload" type="file" label="File Upload" accept=".jpg, .jpeg, .png, .gif, .svg" multiple>
+                </w-input>
+            </w-flex>
+            <w-flex>
+            <w-button class="Upload grow" bg-color="info-dark2" color="white">
+                Upload Data
+                <w-icon class="ml1">wi-chevron-right</w-icon>
+            </w-button>
+            </w-flex>
         </div>
         <div>
             <w-dialog v-model="dialog.show" :fullscreen="dialog.fullscreen" :width="dialog.width" :persistent="dialog.persistent" :persistent-no-animation="dialog.persistentNoAnimation" title-class="primary-light1--bg white">
@@ -49,9 +57,9 @@ export default {
     methods: {
         createNewFile() {
             this.$store.state.fileName = this.file;
-            
-             this.dialog.show = false;
-            
+
+            this.dialog.show = false;
+
             console.log("sdjfsjfjsd");
         },
     },
@@ -103,10 +111,15 @@ export default {
     padding-bottom: 30px;
 }
 
+.upload {
+    position: relative;
+    padding-right: 50px;
+}
+
 .submit1 {
-    position:relative;
+    position: relative;
     padding: 10px;
-    left:110px;
-    top:10px;
+    left: 110px;
+    top: 10px;
 }
 </style>

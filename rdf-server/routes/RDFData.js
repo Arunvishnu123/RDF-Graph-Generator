@@ -14,5 +14,14 @@ RDFRoute.route('/createfile').post((req, res, next) => {
     })
 });
 
+RDFRoute.route('/RDFData/:fileName').get((req, res, next) => {
+    RDFModel.find({fileName:req.params.fileName}, (error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+});
 
 module.exports = RDFRoute;

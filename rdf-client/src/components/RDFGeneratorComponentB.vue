@@ -2,20 +2,13 @@
 <div>
     <w-app>
         <div class="generate">
-
-            <w-button class="saveButton" bg-color="info-dark2" color="white" :loading="button2loading" @click="buttonDoLoading(2)">
-                <w-icon class="mr1">wi-check</w-icon>
-                Save
-                <template #loading>Loading...</template>
-            </w-button>
-
-            <w-button class="generteButton" id="started" bg-color="info-dark2" color="white">
-                Generate RDF Graph
-                <w-icon class="ml1">wi-chevron-right</w-icon>
-            </w-button>
-
+            <w-flex>
+                <w-button class="generteButton grow" bg-color="info-dark2" color="white">
+                    Generate RDF Graph
+                    <w-icon class="ml1">wi-chevron-right</w-icon>
+                </w-button>
+            </w-flex>
         </div>
-        <w-divider class="divider1" color="info-dark2" />
     </w-app>
 </div>
 </template>
@@ -38,21 +31,11 @@ export default {
 
 <style>
 .generteButton {
-
-    position: relative;
-    left: 786px
-}
-
-.saveButton {
-
-    position: relative;
-    left: 770px
+    top: -800px;
 }
 
 .divider1 {
-    position: relative;
-    left: 1px;
-    top: 70px;
-    width: 1020px;
+
+    top: -700px;
 }
 </style>

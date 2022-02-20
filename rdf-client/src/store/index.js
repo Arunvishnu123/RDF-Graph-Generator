@@ -21,10 +21,21 @@ export default createStore({
 
     //file Name
     fileName: "File Name",
-    node0:null,
-    node1:null,
-    node2:null,
-    comment:null
+    ID: null,
+    node0: null,
+    node1: null,
+    node2: null,
+    comment: null,
+
+    //Get individual rdf data from database
+
+    rdfData:{
+      id:null,
+      node0:null,
+      node1:null,
+      node2:null,
+      comment:null
+    }
 
   },
   mutations: {
@@ -63,6 +74,25 @@ export default createStore({
       state.fileName = fileName
     },
 
+    updateID(state, ID) {
+      state.ID = ID
+    },
+
+    updateNode0(state, node0) {
+      state.node0 = node0
+    },
+    updateNode1(state, node1) {
+      state.node1 = node1
+    },
+    updateNode2(state, node2) {
+      state.node2 = node2
+    },
+    updateComment(state, comment) {
+      state.comment = comment
+    },
+
+
+
   },
   actions: {
     createUsers() {
@@ -95,18 +125,25 @@ export default createStore({
         }
       });
     },
-    newFile(){
-      axios.post("http://localhost:4000/createfile",{
-        fileName:this.state.fileName,
-        node0:this.state.node0,
-        node1:this.state.node1,
-        node2:this.state.node2,
-        node3:this.state.comment
-      }).then((response)=>{
+    newFile() {
+      axios.post("http://localhost:4000/createfile", {
+        fileName: this.state.fileName,
+        node0: this.state.node0,
+        node1: this.state.node1,
+        node2: this.state.node2,
+        node3: this.state.comment
+      }).then((response) => {
         console.log(response)
         console.log("jsdjsnjsdnjsdjds")
       });
+    },
 
+    getDataFile(){
+      axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response =>{
+        console.log(response.data)
+        this.state.rdfData = response.data
+        
+      })
     }
 
 
