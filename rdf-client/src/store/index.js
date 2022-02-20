@@ -21,7 +21,7 @@ export default createStore({
 
     //file Name
     fileName: "File Name",
-    ID: null,
+    id: null,
     node0: null,
     node1: null,
     node2: null,
@@ -29,13 +29,7 @@ export default createStore({
 
     //Get individual rdf data from database
 
-    rdfData:{
-      id:null,
-      node0:null,
-      node1:null,
-      node2:null,
-      comment:null
-    }
+    rdfData:null
 
   },
   mutations: {
@@ -74,8 +68,8 @@ export default createStore({
       state.fileName = fileName
     },
 
-    updateID(state, ID) {
-      state.ID = ID
+    updateID(state, id) {
+      state.id = id
     },
 
     updateNode0(state, node0) {
@@ -128,10 +122,11 @@ export default createStore({
     newFile() {
       axios.post("http://localhost:4000/createfile", {
         fileName: this.state.fileName,
+        num:this.state.id,
         node0: this.state.node0,
         node1: this.state.node1,
         node2: this.state.node2,
-        node3: this.state.comment
+        comment: this.state.comment
       }).then((response) => {
         console.log(response)
         console.log("jsdjsnjsdnjsdjds")

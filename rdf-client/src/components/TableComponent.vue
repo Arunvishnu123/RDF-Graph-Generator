@@ -36,12 +36,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>0</td>
-                                <td>Arun</td>
-                                <td>Speaks</td>
-                                <td>English</td>
-                                <td>Add Comments</td>
+                            <tr v-for="data in $store.state.rdfData" :key="data.id">
+                                <td>{{data.num}}</td>
+                                <td>{{data.node0}}</td>
+                                <td>{{data.node1}}</td>
+                                <td>{{data.node2}}</td>
+                                <td>{{data.comment}}</td>
                                 <td>
                                     <w-flex justify-center align-center class="wrapper">
                                         <w-button color="success" icon="fa fa-pencil-square-o" @click="dialog1.show = true">
@@ -84,7 +84,7 @@
             </template>
             <w-form @submit.prevent="newFile">
                 <div class="form-group">
-                    <w-input v-model="ID" required class="mb3" label="ID" color="info" outline>
+                    <w-input v-model="id" required class="mb3" label="ID" color="info" outline>
                     </w-input>
                 </div>
                 <div class="form-group">
@@ -185,9 +185,9 @@ export default {
         }
     },
     computed: {
-        ID: {
+        id: {
             get() {
-                return this.$store.state.ID;
+                return this.$store.state.id;
             },
             set(value) {
                 this.$store.commit("updateID", value);

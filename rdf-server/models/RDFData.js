@@ -5,6 +5,9 @@ let RDFSchema = new rSchema({
   fileName: {
     type: String
   },
+  num: {
+    type: String
+  },
   node0: {
     type: String
   },
