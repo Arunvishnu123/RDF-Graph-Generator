@@ -6,10 +6,12 @@
                 New Document
                 <w-icon class="ml1">wi-chevron-right</w-icon>
             </w-button>
-            <w-button id="started1" bg-color="info-dark2" color="white" class="ma1">
+
+            <w-button @click="getfileName()" id="started1" bg-color="info-dark2" color="white" class="ma1">
                 Existing Document
                 <w-icon class="ml1">wi-chevron-right</w-icon>
             </w-button>
+
             <w-flex>
                 <w-input class="fileupload" type="file" label="File Upload" accept=".jpg, .jpeg, .png, .gif, .svg" multiple>
                 </w-input>
@@ -33,6 +35,23 @@
                     <w-button class="submit1" type="submit">Submit</w-button>
                 </w-form>
             </w-dialog>
+
+            <w-dialog v-model="dialog1.show" :fullscreen="dialog1.fullscreen" :width="dialog1.width" :persistent="dialog1.persistent" :persistent-no-animation="dialog1.persistentNoAnimation" title-class="primary-light1--bg white">
+                <template #title>
+                    <w-icon class="mr2">mdi mdi-tune</w-icon>
+                    Existing Document
+                </template>
+                <div>
+                    <select v-model="getSelectedFile">
+                        <option value="test">--Please choose an option--</option>
+                        <option   v-for="data in $store.state.totalFileNames" :key="data.id" :value="data.fileName">{{data.fileName}}</option>
+                    </select>
+                </div>
+                <template #actions>
+                    <div class="spacer" />
+                    <w-button @click="submitSelectedFileName()">Submit</w-button>
+                </template>
+            </w-dialog>
         </div>
     </w-app>
 </div>
@@ -49,10 +68,18 @@ export default {
             persistentNoAnimation: false,
             width: 300,
         },
+        dialog1: {
+            show: false,
+            fullscreen: false,
+            persistent: false,
+            persistentNoAnimation: false,
+            width: 300,
+        },
         file: "",
         validators: {
             required: (value) => !!value || "This field is required",
         },
+        getSelectedFile:null
     }),
     methods: {
         createNewFile() {
@@ -62,6 +89,17 @@ export default {
 
             console.log("sdjfsjfjsd");
         },
+
+        getfileName() {
+            this.dialog1.show = true;
+            this.$store.dispatch("getFileNames");
+        },
+
+        submitSelectedFileName(){
+            this.dialog1.show = false
+            console.log("djfjjdsfjksdhfjhdf",this.getSelectedFile)
+
+        }
     },
 
     // computed: {
@@ -112,10 +150,10 @@ export default {
     top: -68px;
 }
 
-#Upload{
+#Upload {
     position: relative;
     top: -83px;
-     padding-left: 30px;
+    padding-left: 30px;
     padding-right: 50px;
 }
 

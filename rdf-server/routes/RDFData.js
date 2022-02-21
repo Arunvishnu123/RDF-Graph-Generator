@@ -24,4 +24,15 @@ RDFRoute.route('/RDFData/:fileName').get((req, res, next) => {
     })
 });
 
+RDFRoute.route('/RDFfileName').get((req, res, next) => {
+    RDFModel.find({},{"fileName":1,"_id":0},(error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+});
+
+
 module.exports = RDFRoute;

@@ -195,6 +195,7 @@ export default {
         newFile() {
             this.$store.dispatch("newFile");
             this.$store.dispatch("getDataFile");
+            this.pageNumber1();
         },
         changeColor() {
             this.color = "blue";

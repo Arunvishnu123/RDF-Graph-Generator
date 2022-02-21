@@ -14,11 +14,9 @@
         " :transition="dialog.transition" title="Login Failed" content-class="w-flex align-center justify-center">
             User Name and Password is Wrong
             <w-button class="my6" @click="showDialog = false" bg-color="error">
-            Close
-        </w-button>
+                Close
+            </w-button>
         </w-dialog>
-
-        
     </div>
 </w-app>
 </template>

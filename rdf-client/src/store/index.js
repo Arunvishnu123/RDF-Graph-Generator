@@ -29,7 +29,10 @@ export default createStore({
 
     //Get individual rdf data from database
 
-    rdfData:null
+    rdfData: null,
+
+    //All fileNames
+    totalFileNames: null
 
   },
   mutations: {
@@ -122,7 +125,7 @@ export default createStore({
     newFile() {
       axios.post("http://localhost:4000/createfile", {
         fileName: this.state.fileName,
-        num:this.state.id,
+        num: this.state.id,
         node0: this.state.node0,
         node1: this.state.node1,
         node2: this.state.node2,
@@ -133,15 +136,34 @@ export default createStore({
       });
     },
 
-    getDataFile(){
-      axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response =>{
+    getDataFile() {
+      axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response => {
         console.log(response.data)
         this.state.rdfData = response.data
-        
+
       })
+    },
+
+    getFileNames() {
+      axios.get("http://localhost:4000/RDFfileName").then(response => {
+        console.log(response.data[0])
+        let newArray = [];
+        let uniqueObject = {};
+        for (let i in response.data) {
+         let objTitle = response.data[i]['fileName'];
+
+          // Use the title as the index
+          uniqueObject[objTitle] = response.data[i];
+        }
+        for (let j in uniqueObject) {
+          newArray.push(uniqueObject[j]);
+        }
+        
+        this.state.totalFileNames = newArray;
+        console.log(newArray)
+        console.log(this.state.totalFileNames);
+      })  
     }
-
-
   },
   modules: {},
 });
