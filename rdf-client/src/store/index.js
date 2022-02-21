@@ -32,7 +32,11 @@ export default createStore({
     rdfData: null,
 
     //All fileNames
-    totalFileNames: null
+    totalFileNames: null,
+
+    //get selected file from the selector
+
+    getSelectedFile:null
 
   },
   mutations: {
@@ -88,6 +92,9 @@ export default createStore({
       state.comment = comment
     },
 
+    updateGetSelectedFile(state, getSelectedFile) {
+      state.getSelectedFile = getSelectedFile
+    },
 
 
   },
@@ -137,6 +144,7 @@ export default createStore({
     },
 
     getDataFile() {
+      this.state.rdfData = null
       axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response => {
         console.log(response.data)
         this.state.rdfData = response.data
@@ -163,6 +171,14 @@ export default createStore({
         console.log(newArray)
         console.log(this.state.totalFileNames);
       })  
+    },
+
+    getfiledata(){
+      axios.get("http://localhost:4000/RDFfileName/" + this.state.getSelectedFile).then(response =>{
+        console.log(response.data)
+        this.state.rdfData = response.data
+        this.state.fileName = this.state.getSelectedFile
+      })
     }
   },
   modules: {},

@@ -37,14 +37,6 @@ app.use('/', userAPI)
 app.use('/', rdfAPI)
 
 
-t=[{
-  name:"arun",
-  age:25,
-}]
-app.get('/test' ,(req,res)=>{
- res.json(t)
-})
-
 // Create port
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {

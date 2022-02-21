@@ -44,7 +44,7 @@
                 <div>
                     <select v-model="getSelectedFile">
                         <option value="test">--Please choose an option--</option>
-                        <option   v-for="data in $store.state.totalFileNames" :key="data.id" :value="data.fileName">{{data.fileName}}</option>
+                        <option v-for="data in $store.state.totalFileNames" :key="data.id" :value="data.fileName">{{data.fileName}}</option>
                     </select>
                 </div>
                 <template #actions>
@@ -79,7 +79,7 @@ export default {
         validators: {
             required: (value) => !!value || "This field is required",
         },
-        getSelectedFile:null
+        
     }),
     methods: {
         createNewFile() {
@@ -95,23 +95,37 @@ export default {
             this.$store.dispatch("getFileNames");
         },
 
-        submitSelectedFileName(){
+        submitSelectedFileName() {
+            
+            console.log("djfjjdsfjksdhfjhdf", this.getSelectedFile)
+            this.$store.dispatch("getfiledata")
+            console.log("dbfjsdbfjsdbfhdb")
             this.dialog1.show = false
-            console.log("djfjjdsfjksdhfjhdf",this.getSelectedFile)
 
         }
     },
 
-    // computed: {
-    //    fileName: {
-    //       get() {
-    //          return this.$store.state.fileName;
-    //      },
-    //     set(value) {
-    //        this.$store.commit("updateFileName", value);
-    //    },
-    //},
-    // },
+    computed: {
+        getSelectedFile: {
+            get() {
+                return this.$store.state.getSelectedFile;
+            },
+            set(value) {
+                this.$store.commit("updateGetSelectedFile", value);
+            },
+        },
+
+        // computed: {
+        //    fileName: {
+        //       get() {
+        //          return this.$store.state.fileName;
+        //      },
+        //     set(value) {
+        //        this.$store.commit("updateFileName", value);
+        //    },
+        //},
+        // },
+    }
 };
 </script>
 
