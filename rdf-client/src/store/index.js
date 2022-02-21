@@ -36,7 +36,11 @@ export default createStore({
 
     //get selected file from the selector
 
-    getSelectedFile:null
+    getSelectedFile:null,
+
+    // generated rdf graph
+
+    generatedRDFGraph:null
 
   },
   mutations: {
@@ -178,6 +182,13 @@ export default createStore({
         console.log(response.data)
         this.state.rdfData = response.data
         this.state.fileName = this.state.getSelectedFile
+      })
+    },
+
+    getrdfgraph(){
+      axios.get("http://localhost:4000/RDFGraph/" + this.state.fileName).then(response => {
+        console.log(response.data)
+        this.state.generatedRDFGraph = response.data
       })
     }
   },

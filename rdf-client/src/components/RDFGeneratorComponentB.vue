@@ -3,7 +3,7 @@
     <w-app>
         <div class="generate">
             <w-flex>
-                <w-button class="generteButton grow" bg-color="info-dark2" color="white">
+                <w-button @click="generateRDFGraph" class="generteButton grow" bg-color="info-dark2" color="white">
                     Generate RDF Graph
                     <w-icon class="ml1">wi-chevron-right</w-icon>
                 </w-button>
@@ -25,6 +25,10 @@ export default {
             this[`button${id}loading`] = true;
             setTimeout(() => (this[`button${id}loading`] = false), 3000);
         },
+
+        generateRDFGraph(){
+            this.$store.dispatch("getrdfgraph")
+        }
     },
 };
 </script>

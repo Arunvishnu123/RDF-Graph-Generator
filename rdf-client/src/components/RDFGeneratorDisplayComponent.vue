@@ -27,8 +27,16 @@
             <w-button class="signout grow" color="white" bg-color="info-dark2">Sign Out
             </w-button>
         </w-drawer>
-        <w-textarea class="rdftestarea" v-model="test" color="info-dark2" bg-color="white" value="" label="" outline readonly>
+        <div v-for="data in $store.state.generatedRDFGraph" :key="data.id" >
+            <div class="test">
+        <w-textarea  class="rdftestarea" v-model="test" color="error-dark2" bg-color="white" value="" label="" outline readonly>
+            {{data.node0}}<br>
+            {{data.node1}}<br>
+            {{data.node2}}<br>
+            {{data.node3}}<br>
         </w-textarea>
+            </div>
+        </div>
         <w-flex>
             <w-button class="download grow" color="white" bg-color="info-dark2">Press to Download the Generated RDF Graph</w-button>
         </w-flex>
@@ -41,7 +49,8 @@ export default {
 
     name: "RDFGeneratorDisplayComponent",
     data: () => ({
-        openDrawer: false
+        openDrawer: false,
+        
     }),
 
     computed: {
@@ -55,20 +64,23 @@ export default {
 
 <style scoped>
 .rdftestarea {
-    font-family: Asap;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;;
     font-style: normal;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;
     top: 10px;
-    height: 621px;
+    height: 90px;
+    padding-top:1px
 }
-
+.test{
+    padding-bottom:1px
+}
 .download {
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
-    top:21px;
+    top:624px;
 }
 
 .bnavbar {

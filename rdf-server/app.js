@@ -2,7 +2,6 @@ let express = require('express')
 let mongoose = require('mongoose')
 
 
-
 const app = express()
 
 mongoose.Promise = global.Promise;
@@ -22,7 +21,7 @@ const cookieParser = require('cookie-parser')
 let cors = require('cors')
 const userAPI = require('../rdf-server/routes/UserRegistration')
 const rdfAPI = require('../rdf-server/routes/RDFData')
-
+const graphAPI = require('../rdf-server/routes/RDFGraphGenerator')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -35,7 +34,7 @@ app.use(cookieParser())
 
 app.use('/', userAPI)
 app.use('/', rdfAPI)
-
+app.use('/', graphAPI)
 
 // Create port
 const port = process.env.PORT || 4000;
