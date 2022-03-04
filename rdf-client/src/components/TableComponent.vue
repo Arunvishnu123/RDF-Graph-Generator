@@ -34,6 +34,7 @@
                                 <th>Predicate</th>
                                 <th>Object</th>
                                 <th>Comments</th>
+                                <th>Votes</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -44,6 +45,9 @@
                                 <td>{{ data.node1 }}</td>
                                 <td>{{ data.node2 }}</td>
                                 <td>{{ data.comment }}</td>
+                                <td>
+                                 <Votes />
+                                </td>
                                 <td>
                                     <w-flex class="wrapper">
                                         <w-button color="success" icon="fa fa-pencil-square-o" @click="dialog1.show = true">
@@ -158,8 +162,12 @@
 </template>
 
 <script>
+import Votes from "../components/Votes.vue";
 export default {
     name: "TableComponent",
+    components:{
+    Votes
+    },
     data: () => ({
         dialog: {
             show: false,

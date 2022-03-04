@@ -26,9 +26,9 @@ export default {
             setTimeout(() => (this[`button${id}loading`] = false), 3000);
         },
 
-        generateRDFGraph(){
-            this.$store.dispatch("getrdfgraph")
-        }
+        generateRDFGraph() {
+            this.$store.dispatch("getrdfgraph");
+        },
     },
 };
 </script>
@@ -39,7 +39,6 @@ export default {
 }
 
 .divider1 {
-
     top: -700px;
 }
 </style>

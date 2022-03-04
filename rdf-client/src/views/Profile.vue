@@ -38,31 +38,31 @@
                 </w-tag>
                 <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
                 <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
-            </div> 
+            </div>
             <div class="edit">
                 <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
                     File Name
                 </w-tag>
                 <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
                 <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
-            </div> 
+            </div>
             <div class="edit">
                 <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
                     File Name
                 </w-tag>
                 <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
                 <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
-            </div>       
+            </div>
             <div class="edit">
                 <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
                     File Name
                 </w-tag>
                 <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
                 <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
-            </div> 
+            </div>
 
             <div class="divider1"></div>
-            <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Add Dataset</w-button>
+            <w-button class="adddataset ma1" bg-color="info-dark3" color="white" outline xl>Add Dataset</w-button>
         </div>
     </div>
 </w-app>
@@ -145,7 +145,7 @@ export default {
     flex-direction: column;
     align-items: center;
     overflow: scroll;
-    
+
 }
 
 .datatext {
@@ -190,6 +190,7 @@ export default {
     height: 10px;
     background-color: rgb(240, 240, 241);
     width: 100%;
+    top:10px;
 }
 
 .filename {
@@ -199,5 +200,7 @@ export default {
 .remove {
     left: 265px;
 }
-
+.adddataset{
+    top:20px
+}
 </style>

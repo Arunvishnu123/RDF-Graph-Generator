@@ -126,7 +126,7 @@ export default createStore({
         console.log(response.data.success)
         if (response.data.success === "Login Success") {
           console.log("dksbkjsdb")
-          router.push('/RDFGenerate')
+          router.push('/profile')
         } else {
           this.state.showDialog = true
           console.log("login failed")

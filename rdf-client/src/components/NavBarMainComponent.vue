@@ -2,6 +2,7 @@
 <div>
     <w-app>
         <div>
+            <Avatar class="avatar" :avatar="text" />
             <w-flex>
                 <w-button class="home grow" color="white" bg-color="info-dark2">Home
                 </w-button>
@@ -20,16 +21,33 @@
 </div>
 </template>
 
+<script>
+import Avatar from "../components/Avatar.vue";
+export default {
+    components: {
+        Avatar,
+    },
+    data: () => ({
+        text: "A",
+    }),
+};
+</script>
+
 <style scoped>
 .home {
-    top: 44px;
+    top: 100px;
 }
 
 .about {
-    top: 30px;
+    top: 100px;
 }
 
 .signout {
-    top: 40px;
+    top: 120px;
+}
+.avatar{
+    position:absolute;
+    top:4px;
+    left:35px
 }
 </style>
