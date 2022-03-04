@@ -12,8 +12,11 @@
         <w-drawer v-model="openDrawer" :[position]="true">
             <w-button @click="openDrawer = false" sm outline round absolute icon="wi-cross">
             </w-button>
-
+           
+            <br />
             <w-flex>
+                <Avatar class="avatar" :avatar="text1"/>
+                <h4 class="username">Arun Raveendran Nair Sheela </h4>
                 <w-button class="home grow" color="white" bg-color="info-dark2">Home
                 </w-button>
             </w-flex>
@@ -27,15 +30,13 @@
             <w-button class="signout grow" color="white" bg-color="info-dark2">Sign Out
             </w-button>
         </w-drawer>
-       
-            <div class="test">
-                
 
-                <pre>
-                    {{text}}
-                </pre>
-            </div>
-       
+        <div class="test">
+            <pre>
+            {{ text }}
+            </pre>
+        </div>
+
         <w-flex>
             <w-button class="download grow" color="white" bg-color="info-dark2">Press to Download the Generated RDF Graph</w-button>
         </w-flex>
@@ -44,20 +45,22 @@
 </template>
 
 <script>
+import Avatar from "../components/Avatar.vue";
 export default {
-
     name: "RDFGeneratorDisplayComponent",
     data: () => ({
         openDrawer: false,
-        text:"\narun\nvishnu\njjxhasjdjasd\nsdijjsidjisad\n \nArunnn"
-
+        text: "\narun\nvishnu\njjxhasjdjasd\nsdijjsidjisad\n \nArunnn\nuhduhdjshdj\nskdjashdhasdhas\nsadasdashd",
+        text1: "A",
     }),
+    components: {
+        Avatar,
+    },
 
     computed: {
         position() {
             return this.openDrawer || "right";
         },
-
     },
 };
 </script>
@@ -65,17 +68,16 @@ export default {
 <style scoped>
 .rdftestarea {
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    ;
     font-style: normal;
     font-weight: bold;
     font-size: 15px;
     top: 10px;
     height: 120px;
-    padding-top: 1px
+    padding-top: 1px;
 }
 
 .test {
-    padding-bottom: 1px
+    padding-bottom: 1px;
 }
 
 .download {
@@ -83,7 +85,7 @@ export default {
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
-    top: 624px;
+    top: 383px;
 }
 
 .bnavbar {
@@ -92,19 +94,21 @@ export default {
     top: 12px;
 }
 
-pre { 
-    white-space: pre-wrap; 
+pre {
+    white-space: pre-wrap;
     word-break: break-word;
 }
+
 pre {
     counter-reset: line-numbering;
     font-family: Menlo, Monaco, monospace;
     background-color: #333;
     padding: 5px;
-    color: #CCC;
+    color: #ccc;
     border-radius: 3px;
     word-break: break-word;
 }
+
 pre .line::before {
     content: counter(line-numbering);
     counter-increment: line-numbering;
@@ -141,5 +145,23 @@ pre .line::before {
     width: 10px;
     left: 0x;
     top: 0px;
+}
+
+h4 {
+    padding: 0;
+    margin: 0;
+}
+
+.avatar {
+    position: absolute;
+    height: 100px;
+    top:30px;
+    left:150px
+}
+.username{
+
+    position:absolute;
+    top:120px;
+    left:30px
 }
 </style>

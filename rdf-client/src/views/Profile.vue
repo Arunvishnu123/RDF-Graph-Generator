@@ -38,7 +38,28 @@
                 </w-tag>
                 <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
                 <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
+            </div> 
+            <div class="edit">
+                <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
+                    File Name
+                </w-tag>
+                <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
+                <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
+            </div> 
+            <div class="edit">
+                <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
+                    File Name
+                </w-tag>
+                <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
+                <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
             </div>       
+            <div class="edit">
+                <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
+                    File Name
+                </w-tag>
+                <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
+                <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
+            </div> 
 
             <div class="divider1"></div>
             <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Add Dataset</w-button>
@@ -179,7 +200,4 @@ export default {
     left: 265px;
 }
 
-.edit {
-
-}
 </style>

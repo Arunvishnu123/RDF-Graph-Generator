@@ -2,56 +2,13 @@
 <div>
     <w-app>
         <div>
-            <w-button @click="dialog.show = true" id="started" bg-color="info-dark2" color="white" class="ma1">
-                New Document
-                <w-icon class="ml1">wi-chevron-right</w-icon>
-            </w-button>
+          
 
-            <w-button @click="getfileName()" id="started1" bg-color="info-dark2" color="white" class="ma1">
-                Existing Document
-                <w-icon class="ml1">wi-chevron-right</w-icon>
-            </w-button>
-
-            <w-flex>
-                <w-input class="fileupload" type="file" label="File Upload" accept=".jpg, .jpeg, .png, .gif, .svg" multiple>
-                </w-input>
-            </w-flex>
-            <w-flex>
-                <w-button id="Upload" class="grow" bg-color="info-dark2" color="white">
-                    Upload Data
-                    <w-icon class="ml1">wi-chevron-right</w-icon>
-                </w-button>
-            </w-flex>
         </div>
         <div>
-            <w-dialog v-model="dialog.show" :fullscreen="dialog.fullscreen" :width="dialog.width" :persistent="dialog.persistent" :persistent-no-animation="dialog.persistentNoAnimation" title-class="primary-light1--bg white">
-                <template #title>
-                    <w-icon class="mr2">mdi mdi-tune</w-icon>
-                    Enter the File Name
-                </template>
-                <w-form @submit.prevent="createNewFile">
-                    <w-input :validators="[validators.required]" v-model="file" label="File Name" shadow outline>
-                    </w-input>
-                    <w-button class="submit1" type="submit">Submit</w-button>
-                </w-form>
-            </w-dialog>
+          
 
-            <w-dialog v-model="dialog1.show" :fullscreen="dialog1.fullscreen" :width="dialog1.width" :persistent="dialog1.persistent" :persistent-no-animation="dialog1.persistentNoAnimation" title-class="primary-light1--bg white">
-                <template #title>
-                    <w-icon class="mr2">mdi mdi-tune</w-icon>
-                    Existing Document
-                </template>
-                <div>
-                    <select v-model="getSelectedFile">
-                        <option value="test">--Please choose an option--</option>
-                        <option v-for="data in $store.state.totalFileNames" :key="data.id" :value="data.fileName">{{data.fileName}}</option>
-                    </select>
-                </div>
-                <template #actions>
-                    <div class="spacer" />
-                    <w-button @click="submitSelectedFileName()">Submit</w-button>
-                </template>
-            </w-dialog>
+         
         </div>
     </w-app>
 </div>

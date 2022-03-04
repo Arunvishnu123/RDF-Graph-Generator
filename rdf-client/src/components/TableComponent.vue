@@ -205,8 +205,8 @@ export default {
             this.page1 = "1 - 5";
             this.isActive1 = true;
             this.isActive3 = false;
-            this.isActive4 =false;
-            this.isActive2 =false;
+            this.isActive4 = false;
+            this.isActive2 = false;
             this.isActive5 = false;
         },
 
@@ -215,8 +215,8 @@ export default {
             this.page1 = "6 - 10";
             this.isActive2 = true;
             this.isActive3 = false;
-            this.isActive4 =false;
-            this.isActive1 =false;
+            this.isActive4 = false;
+            this.isActive1 = false;
             this.isActive5 = false;
         },
         pageNumber3() {
@@ -224,8 +224,8 @@ export default {
             this.page1 = "11 - 15";
             this.isActive3 = true;
             this.isActive1 = false;
-            this.isActive4 =false;
-            this.isActive2 =false;
+            this.isActive4 = false;
+            this.isActive2 = false;
             this.isActive5 = false;
         },
         pageNumber4() {
@@ -233,8 +233,8 @@ export default {
             this.page1 = "16 - 20";
             this.isActive4 = true;
             this.isActive3 = false;
-            this.isActive1 =false;
-            this.isActive2 =false;
+            this.isActive1 = false;
+            this.isActive2 = false;
             this.isActive5 = false;
         },
         pageNumber5() {
@@ -242,8 +242,8 @@ export default {
             this.page1 = "21 - 25";
             this.isActive5 = true;
             this.isActive3 = false;
-            this.isActive4 =false;
-            this.isActive2 =false;
+            this.isActive4 = false;
+            this.isActive2 = false;
             this.isActive1 = false;
         },
     },
