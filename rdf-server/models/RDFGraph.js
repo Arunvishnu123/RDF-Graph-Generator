@@ -11,9 +11,16 @@ let graphSchema = new Schema({
   node2: {
     type: String
   },
+  node3: {
+    type: String
+  },
   fileName: {
     type: String
   },
+  comment: {
+    type: String
+  },
+
 }, {
   collection: 'rdfGraph'
 })

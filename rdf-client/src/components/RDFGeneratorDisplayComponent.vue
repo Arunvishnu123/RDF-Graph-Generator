@@ -27,16 +27,15 @@
             <w-button class="signout grow" color="white" bg-color="info-dark2">Sign Out
             </w-button>
         </w-drawer>
-        <div v-for="data in $store.state.generatedRDFGraph" :key="data.id" >
+       
             <div class="test">
-        <w-textarea  class="rdftestarea" v-model="test" color="error-dark2" bg-color="white" value="" label="" outline readonly>
-            {{data.node0}}<br>
-            {{data.node1}}<br>
-            {{data.node2}}<br>
-            {{data.node3}}<br>
-        </w-textarea>
+                
+
+                <pre>
+                    {{text}}
+                </pre>
             </div>
-        </div>
+       
         <w-flex>
             <w-button class="download grow" color="white" bg-color="info-dark2">Press to Download the Generated RDF Graph</w-button>
         </w-flex>
@@ -50,7 +49,8 @@ export default {
     name: "RDFGeneratorDisplayComponent",
     data: () => ({
         openDrawer: false,
-        
+        text:"\narun\nvishnu\njjxhasjdjasd\nsdijjsidjisad\n \nArunnn"
+
     }),
 
     computed: {
@@ -64,29 +64,55 @@ export default {
 
 <style scoped>
 .rdftestarea {
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    ;
     font-style: normal;
     font-weight: bold;
     font-size: 15px;
     top: 10px;
-    height: 90px;
-    padding-top:1px
+    height: 120px;
+    padding-top: 1px
 }
-.test{
-    padding-bottom:1px
+
+.test {
+    padding-bottom: 1px
 }
+
 .download {
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
-    top:624px;
+    top: 624px;
 }
 
 .bnavbar {
     position: fixed;
     left: 1480px;
     top: 12px;
+}
+
+pre { 
+    white-space: pre-wrap; 
+    word-break: break-word;
+}
+pre {
+    counter-reset: line-numbering;
+    font-family: Menlo, Monaco, monospace;
+    background-color: #333;
+    padding: 5px;
+    color: #CCC;
+    border-radius: 3px;
+    word-break: break-word;
+}
+pre .line::before {
+    content: counter(line-numbering);
+    counter-increment: line-numbering;
+    padding-right: 1em;
+    /* space after numbers */
+    width: 1.5em;
+    text-align: right;
+    opacity: 0.5;
 }
 
 .home {

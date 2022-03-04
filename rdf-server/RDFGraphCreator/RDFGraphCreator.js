@@ -1,7 +1,7 @@
-function RDFGraphGenerator(node0,node1,node2,fileName)
+function RDFGraphGenerator(node0,node1,node2,comment,fileName)
 {
 
-    let string1 = "qa:node1 rdfs:label \"" 
+    let string1 = "qa:node1  rdfs:label \"" 
     let string2 = "qa:language skos:altLabel \""
     let string3 = "qa:node2 rdfs:label \""
     let string4 = "qa:node1 qa:language qa:node2 "
@@ -19,6 +19,7 @@ function RDFGraphGenerator(node0,node1,node2,fileName)
         node1:frdfGraph2,
         node2:frdfGraph3,
         node3:string4,
+        comment:comment,
         fileName:fileName
     }
 

@@ -11,7 +11,7 @@ RDFGraphRoute.route('/RDFGraph/:fileName').get((req, res, next) => {
             return next(error)
         } else {
             for (let data of datas) {
-                let convertedrdfgraph = rdfconvert.RDFGraphGenerator(data.node0, data.node1, data.node2, data.fileName)
+                let convertedrdfgraph = rdfconvert.RDFGraphGenerator(data.node0, data.node1, data.node2,data.comment,data.fileName)
                 console.log(convertedrdfgraph)
                 RDFGraph.create(convertedrdfgraph, (error, data) => {
                     if (error) {
