@@ -174,8 +174,9 @@ export default createStore({
     },
 
     async gettripleData(filename){
-      await axios.get("http://localhost:4000/RDFData/" + filename).then(response =>{
-        console.log(response)
+      console.log("fienammw",filename)
+      await axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response =>{
+        console.log("get filedatatat",response)
         this.state.rdfData = response.data
       })
     },

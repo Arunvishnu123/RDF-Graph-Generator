@@ -8,7 +8,7 @@
             <div>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rdf_logo.svg/768px-Rdf_logo.svg.png" alt="RDF image" class="image" />
             </div>
-            <div>
+            <div class="table">
                 <splitpanes class="default-theme" @resize="paneSize = $event[0].size" style="height: 720px">
                     <pane :size="paneSize">
                         <div class="componentA">
@@ -20,10 +20,10 @@
                         <div class="ComponentB">
                             <RDFGeneratorB />
                         </div>
-                       
+
                     </pane>
-                    <pane :size="100 - paneSize"> 
-                         <div class="display">
+                    <pane :size="100 - paneSize">
+                        <div class="display">
                             <RDFGeneratorDisplayComponent />
                         </div>
                     </pane>
@@ -56,7 +56,7 @@ export default {
     data() {
         return {
             paneSize: 70,
-           
+
         };
     },
 };
@@ -74,7 +74,7 @@ export default {
     left: 13px;
     top: -660px;
     padding-right: 23px;
-    
+
 }
 
 .image {
@@ -100,8 +100,9 @@ export default {
     margin-top: -23px;
     margin-left: -15px;
 }
-.display{
+
+.display {
     position: relative;
-    top:0px
+    top: 0px
 }
 </style>

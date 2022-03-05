@@ -21,7 +21,6 @@
                                         </template>
                                         Click here to add new triple
                                     </w-tooltip>
-                                    
                                 </w-flex>
                             </div>
                         </div>
@@ -38,6 +37,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <tr v-for="data in rdfgraph" :key="data.id">
                                 <td>{{ data.num }}</td>
@@ -52,7 +52,6 @@
                                     <w-flex class="wrapper">
                                         <w-button color="success" icon="fa fa-pencil-square-o" @click="dialog1.show = true">
                                         </w-button>
-
                                         <span> </span>
                                         <w-confirm question="Are you sure you want to delete this?" @confirm="test" color="error" icon="mdi mdi-delete">
                                             Delete
@@ -191,7 +190,11 @@ export default {
         isActive3: false,
         isActive4: false,
         isActive5: false,
+        text: null,
     }),
+    created(){
+this.pageNumber1()
+    },
     methods: {
         buttonDoLoading(id) {
             this[`button${id}loading`] = true;
@@ -244,6 +247,7 @@ export default {
             this.isActive1 = false;
             this.isActive2 = false;
             this.isActive5 = false;
+            console.log(this.rdfgraph);
         },
         pageNumber5() {
             this.rdfgraph = this.$store.state.rdfData.slice(20, 2);
@@ -302,6 +306,8 @@ export default {
                 this.$store.commit("updateComment", value);
             },
         },
+
+       
     },
 };
 </script>
@@ -348,7 +354,7 @@ body {
 }
 
 .table-wrapper {
-    background: #fff;
+    background: rgb(233, 233, 233);
     padding: 20px 25px;
     border-radius: 3px;
     min-width: 1000px;

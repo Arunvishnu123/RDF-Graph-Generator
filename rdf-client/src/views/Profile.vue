@@ -68,11 +68,12 @@ export default {
           this.$store.dispatch("deleteFileName",data.fileName)
           this.$store.dispatch("getFileName")
       },
-      navigate(data){
-          console.log(data.fileName)
-          this.$store.dispatch("gettripleData",data.fileName)
-          this.$router.push('/RDFGenerate')
-          this.$store.state.fileName = data.fileName
+     async  navigate(data){
+          console.log(data.fileName) 
+          this.$store.state.fileName = data.fileName;
+         await  this.$store.dispatch("gettripleData",data.fileName)
+         await this.$router.push('/RDFGenerate')
+          
       }
 
     },
