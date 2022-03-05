@@ -21,7 +21,7 @@
                                         </template>
                                         Click here to add new triple
                                     </w-tooltip>
-                                    <w-confirm question="Are you sure you want to delete the entrie file?" class="test1 px2" bg-color="red">Delete</w-confirm>
+                                    
                                 </w-flex>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                 <td>{{ data.node2 }}</td>
                                 <td>{{ data.comment }}</td>
                                 <td>
-                                 <Votes />
+                                    <Votes />
                                 </td>
                                 <td>
                                     <w-flex class="wrapper">
@@ -165,8 +165,8 @@
 import Votes from "../components/Votes.vue";
 export default {
     name: "TableComponent",
-    components:{
-    Votes
+    components: {
+        Votes,
     },
     data: () => ({
         dialog: {
@@ -326,7 +326,7 @@ body {
 
 .test {
     position: absolute;
-    left: 290px;
+    left: 360px;
     top: 1.6px;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
