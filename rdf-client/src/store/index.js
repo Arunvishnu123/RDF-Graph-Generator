@@ -243,6 +243,7 @@ export default createStore({
       axios.get("http://localhost:4000/RDFGraph/" + this.state.fileName).then(response => {
         console.log(response.data)
         this.state.generatedRDFGraph = response.data
+        console.log(this.state.fileName)
       })
     }
   },

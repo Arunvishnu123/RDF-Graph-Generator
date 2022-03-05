@@ -20,6 +20,16 @@ export default {
     data: () => ({
         showBadge: 0,
     }),
+    props: {
+        showVotes: {
+            type: String,
+            default () {
+                return showBadge;
+            },
+        },
+
+    },
+    
 
 };
 </script>

@@ -30,8 +30,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Subject</th>
-                                <th>Predicate</th>
-                                <th>Object</th>
+                                <th>Property</th>
+                                <th>Object/ Value</th>
                                 <th>Editor Name</th>
                                 <th>Comments</th>
                                 <th>Approve/ Disapprove</th>
@@ -122,20 +122,27 @@
                 Add Data
             </template>
             <w-form @submit.prevent="newFile">
-                <div class="form-group">
-                </div>
-                <div class="form-group">
-                    <w-input v-model="node0" required class="mb3" label="Subject" color="info" outline>
-                    </w-input>
-                </div>
-                <div class="form-group">
-                    <w-input v-model="node1" required class="mb3" label="Predicate" color="info" outline>
-                    </w-input>
-                </div>
-                <div class="form-group">
-                    <w-input v-model="node2" required class="mb3" label="Object" color="info" outline>
-                    </w-input>
-                </div>
+                <w-flex class="grow mx1" justify-center>
+                    <div class="form-group">
+                        <w-select items="items" shadow color="info" outline>
+                            Property Name
+                        </w-select>
+                    </div>
+                </w-flex>
+                <w-flex class="grow mx1" justify-center>
+                    <div class="form-group">
+                        <w-input v-model="node0" required class="mb3" label="Subject" color="info" outline>
+                        </w-input>
+                    </div>
+                    <div class="form-group">
+                        <w-input v-model="node1" required class="mb3" label="Property" color="info" outline>
+                        </w-input>
+                    </div>
+                    <div class="form-group">
+                        <w-input v-model="node2" required class="mb3" label="Object/Value" color="info" outline>
+                        </w-input>
+                    </div>
+                </w-flex>
                 <div class="form-group">
                     <w-textarea v-model="comment" required class="mt4" outline color="blue">
                         Comments
@@ -148,6 +155,9 @@
                     <w-icon class="mr1">wi-check</w-icon>
                     Save
                 </w-button>
+                <w-button class="my1 mr2" bg-color="warning" type="reset">
+                    Reset
+                </w-button>
             </w-form>
         </w-dialog>
         <!-- Edit Modal HTML -->
@@ -156,18 +166,17 @@
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
                 Edit Data
             </template>
-            <div class="form-group">
-                <w-input class="mb3" label="ID" color="info" outline> </w-input>
-            </div>
-            <div class="form-group">
-                <w-input class="mb3" label="Node 0" color="info" outline> </w-input>
-            </div>
-            <div class="form-group">
-                <w-input class="mb3" label="Node 1" color="info" outline> </w-input>
-            </div>
-            <div class="form-group">
-                <w-input class="mb3" label="Node 2" color="info" outline> </w-input>
-            </div>
+            <w-flex>
+                <div class="form-group">
+                    <w-input class="mb3" label="Node 0" color="info" outline> </w-input>
+                </div>
+                <div class="form-group">
+                    <w-input class="mb3" label="Node 1" color="info" outline> </w-input>
+                </div>
+                <div class="form-group">
+                    <w-input class="mb3" label="Node 2" color="info" outline> </w-input>
+                </div>
+            </w-flex>
             <div class="form-group">
                 <w-textarea class="mt4" outline color="blue"> Comments </w-textarea>
             </div>
@@ -179,6 +188,7 @@
                     <w-icon class="mr1">wi-check</w-icon>
                     Save
                 </w-button>
+
             </template>
         </w-dialog>
 
@@ -197,14 +207,14 @@ export default {
             fullscreen: false,
             persistent: false,
             persistentNoAnimation: false,
-            width: 300,
+            width: 700,
         },
         dialog1: {
             show: false,
             fullscreen: false,
             persistent: false,
             persistentNoAnimation: false,
-            width: 300,
+            width: 500,
         },
         button1loading: false,
         button2loading: false,
@@ -216,6 +226,16 @@ export default {
         isActive5: false,
         text: null,
         showBadge: 0,
+        items: [{
+                label: 'Item 1'
+            },
+            {
+                label: 'Item 2'
+            },
+            {
+                label: 'Item 3'
+            }
+        ]
     }),
     created() {
         this.pageNumber1();
