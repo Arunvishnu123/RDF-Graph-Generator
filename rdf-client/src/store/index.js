@@ -10,17 +10,34 @@ export default createStore({
     DOB: null,
     email: null,
     password: null,
-
+    uniqueID: 0,
     //sign in 
 
     lemail: null,
     lpassword: null,
+    //current user
+    currentUserData: {
+      firstName: null,
+      lastName: null,
+      email: null,
+      password: null,
+      DOB: null,
+    },
 
+    newFileName: "Dataset-",
+
+    //total filenames
+    totalFileName: null,
+
+
+    //load rdf data
+
+    loadedRDFData:null,
     //login failed
     showDialog: false,
 
     //file Name
-    fileName: "File Name",
+    fileName: null,
     id: null,
     node0: null,
     node1: null,
@@ -36,11 +53,11 @@ export default createStore({
 
     //get selected file from the selector
 
-    getSelectedFile:null,
+    getSelectedFile: null,
 
     // generated rdf graph
 
-    generatedRDFGraph:null
+    generatedRDFGraph: null
 
   },
   mutations: {
@@ -103,8 +120,8 @@ export default createStore({
 
   },
   actions: {
-    createUsers() {
-      axios.post("http://localhost:4000/createusers", {
+    async createUsers() {
+      await axios.post("http://localhost:4000/createusers", {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         DOB: this.state.DOB,
@@ -116,25 +133,55 @@ export default createStore({
       console.log("dkksdmf")
     },
 
-    loginUser() {
-      axios.post("http://localhost:4000/signin", {
+    async loginUser() {
+      await axios.post("http://localhost:4000/signin", {
         email: this.state.lemail,
         password: this.state.lpassword
       }).then((response) => {
-        console.log(response);
-        console.log(response.data.result)
-        console.log(response.data.success)
+        console.log(response.data);
+        this.state.currentUserData = response.data.result
         if (response.data.success === "Login Success") {
-          console.log("dksbkjsdb")
           router.push('/profile')
+          console.log("login_success")
         } else {
           this.state.showDialog = true
           console.log("login failed")
         }
       });
     },
-    newFile() {
-      axios.post("http://localhost:4000/createfile", {
+
+    async createFileName() {
+      await axios.post("http://localhost:4000/file", {
+        fileName: this.state.newFileName.concat(this.state.uniqueID)
+      }).then((response) => {
+        console.log(response.data)
+        this.state.totalFileName = response.data
+        this.state.uniqueID = this.state.uniqueID + 1
+      })
+    },
+
+    async deleteFileName(filename) {
+      await axios.delete("http://localhost:4000/deleteFileName/" + filename).then(response => {
+        console.log(response)
+      })
+    },
+
+    async getFileName() {
+      await axios.get("http://localhost:4000/totalfilename").then((response => {
+        console.log(response)
+        this.state.totalFileName = response.data
+      }))
+    },
+
+    async gettripleData(filename){
+      await axios.get("http://localhost:4000/RDFData/" + filename).then(response =>{
+        console.log(response)
+        this.state.rdfData = response.data
+      })
+    },
+
+    async newFile() {
+      await axios.post("http://localhost:4000/createfile", {
         fileName: this.state.fileName,
         num: this.state.id,
         node0: this.state.node0,
@@ -147,22 +194,24 @@ export default createStore({
       });
     },
 
-    getDataFile() {
+    async getDataFile() {
       this.state.rdfData = null
-      axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response => {
+     await  axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response => {
         console.log(response.data)
         this.state.rdfData = response.data
 
       })
     },
 
+
+   
     getFileNames() {
       axios.get("http://localhost:4000/RDFfileName").then(response => {
         console.log(response.data[0])
         let newArray = [];
         let uniqueObject = {};
         for (let i in response.data) {
-         let objTitle = response.data[i]['fileName'];
+          let objTitle = response.data[i]['fileName'];
 
           // Use the title as the index
           uniqueObject[objTitle] = response.data[i];
@@ -170,22 +219,22 @@ export default createStore({
         for (let j in uniqueObject) {
           newArray.push(uniqueObject[j]);
         }
-        
+
         this.state.totalFileNames = newArray;
         console.log(newArray)
         console.log(this.state.totalFileNames);
-      })  
+      })
     },
 
-    getfiledata(){
-      axios.get("http://localhost:4000/RDFfileName/" + this.state.getSelectedFile).then(response =>{
+    getfiledata() {
+      axios.get("http://localhost:4000/RDFfileName/" + this.state.getSelectedFile).then(response => {
         console.log(response.data)
         this.state.rdfData = response.data
         this.state.fileName = this.state.getSelectedFile
       })
     },
 
-    getrdfgraph(){
+    getrdfgraph() {
       axios.get("http://localhost:4000/RDFGraph/" + this.state.fileName).then(response => {
         console.log(response.data)
         this.state.generatedRDFGraph = response.data

@@ -14,7 +14,7 @@
                     <h1 class="profile">Profile</h1>
                 </div>
                 <Avatar :avatar="text" />
-                <h1 class="name">Arun Raveendran Nair Sheela</h1>
+                <h1 class="name">{{$store.state.currentUserData.firstName}} {{$store.state.currentUserData.lastName}}</h1>
             </div>
         </div>
         <div class="dataset">
@@ -32,37 +32,16 @@
                     <h1 class="adddatasetr">Remove</h1>
                 </div>
             </div>
-            <div class="edit">
+            <div v-for= "data in $store.state.totalFileName" :key="data.id" class="edit">
                 <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
-                    File Name
+                    {{data.fileName}}
                 </w-tag>
-                <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
-                <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
-            </div>
-            <div class="edit">
-                <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
-                    File Name
-                </w-tag>
-                <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
-                <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
-            </div>
-            <div class="edit">
-                <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
-                    File Name
-                </w-tag>
-                <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
-                <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
-            </div>
-            <div class="edit">
-                <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
-                    File Name
-                </w-tag>
-                <w-button class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
-                <w-button class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
+                <w-button @click="navigate(data)" class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
+                <w-button @click="test1(data)" class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
             </div>
 
             <div class="divider1"></div>
-            <w-button class="adddataset ma1" bg-color="info-dark3" color="white" outline xl>Add Dataset</w-button>
+            <w-button @click="createNewFile()" class="adddataset ma1" bg-color="info-dark3" color="white" outline xl>Add Dataset</w-button>
         </div>
     </div>
 </w-app>
@@ -80,7 +59,27 @@ export default {
         text: "A",
     }),
 
-    methods: {},
+    methods: {
+      createNewFile(){
+          this.$store.dispatch("createFileName");
+      },
+      test1(data){
+          console.log(data.fileName)
+          this.$store.dispatch("deleteFileName",data.fileName)
+          this.$store.dispatch("getFileName")
+      },
+      navigate(data){
+          console.log(data.fileName)
+          this.$store.dispatch("gettripleData",data.fileName)
+          this.$router.push('/RDFGenerate')
+          this.$store.state.fileName = data.fileName
+      }
+
+    },
+
+    create(){
+        this.$store.dispatch("createFileName");
+    }
 };
 </script>
 
@@ -145,7 +144,6 @@ export default {
     flex-direction: column;
     align-items: center;
     overflow: scroll;
-
 }
 
 .datatext {
@@ -190,7 +188,7 @@ export default {
     height: 10px;
     background-color: rgb(240, 240, 241);
     width: 100%;
-    top:10px;
+    top: 10px;
 }
 
 .filename {
@@ -200,7 +198,9 @@ export default {
 .remove {
     left: 265px;
 }
-.adddataset{
-    top:20px
+
+.adddataset {
+    top: 20px;
 }
+
 </style>

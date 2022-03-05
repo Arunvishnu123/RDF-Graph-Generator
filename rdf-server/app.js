@@ -22,6 +22,7 @@ let cors = require('cors')
 const userAPI = require('../rdf-server/routes/UserRegistration')
 const rdfAPI = require('../rdf-server/routes/RDFData')
 const graphAPI = require('../rdf-server/routes/RDFGraphGenerator')
+const fileAPI = require('../rdf-server/routes/FileName')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -35,6 +36,7 @@ app.use(cookieParser())
 app.use('/', userAPI)
 app.use('/', rdfAPI)
 app.use('/', graphAPI)
+app.use('/', fileAPI)
 
 // Create port
 const port = process.env.PORT || 4000;

@@ -27,8 +27,7 @@ userRoute.route('/signin').post((req, res, next) => {
         if (err || result === null) {
             res.send({ success: "Login Failed" })
         } else {
-            res.send({ success: "Login Success", result })
-            console.log(result)
+            res.json({ success: "Login Success",result},)
         }
     })
 });

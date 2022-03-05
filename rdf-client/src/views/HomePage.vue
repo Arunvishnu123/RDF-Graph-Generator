@@ -4,7 +4,7 @@
         <h1 class="text1">RDF Graph Generator</h1>
     </div>
     <div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rdf_logo.svg/768px-Rdf_logo.svg.png" alt="RDF image" class="image" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rdf_logo.svg/768px-Rdf_logo.png" alt="RDF image" class="image" />
     </div>
 <div>
     <LoginComponent />
