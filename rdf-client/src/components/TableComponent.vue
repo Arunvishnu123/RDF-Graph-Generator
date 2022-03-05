@@ -32,22 +32,45 @@
                                 <th>Subject</th>
                                 <th>Predicate</th>
                                 <th>Object</th>
+                                <th>Editor Name</th>
                                 <th>Comments</th>
+                                <th>Approve/ Disapprove</th>
                                 <th>Votes</th>
+
                                 <th>Actions</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr v-for="data in rdfgraph" :key="data.id">
+                            <tr v-for="data in test123" :key="data.id">
                                 <td>{{ data.num }}</td>
                                 <td>{{ data.node0 }}</td>
                                 <td>{{ data.node1 }}</td>
                                 <td>{{ data.node2 }}</td>
+
+                                <td>Arun</td>
                                 <td>{{ data.comment }}</td>
                                 <td>
-                                    <Votes />
+                                    <w-switch class="ma2" :model-value="false" color="success">
+                                    </w-switch>
                                 </td>
+
+                                <td>
+                                    <w-flex align-center>
+                                        <w-button @click="showBadge--" icon="wi-minus" bg-color="success" sm>
+                                        </w-button>
+
+                                        <w-badge class="mx6" v-model="showBadge" bg-color="error" overlap>
+                                            <w-icon class="mr1" xl color="primary">
+                                                mdi mdi-thumb-up
+                                            </w-icon>
+                                        </w-badge>
+
+                                        <w-button @click="showBadge++" icon="wi-plus" bg-color="success" sm>
+                                        </w-button>
+                                    </w-flex>
+                                </td>
+
                                 <td>
                                     <w-flex class="wrapper">
                                         <w-button color="success" icon="fa fa-pencil-square-o" @click="dialog1.show = true">
@@ -56,6 +79,9 @@
                                         <w-confirm question="Are you sure you want to delete this?" @confirm="test" color="error" icon="mdi mdi-delete">
                                             Delete
                                         </w-confirm>
+
+                                        <w-button color="success" icon="fa fa-check">
+                                        </w-button>
                                     </w-flex>
                                 </td>
                             </tr>
@@ -81,6 +107,9 @@
                             <li class="page-item" v-bind:class="{ active: isActive5 }">
                                 <button @click="pageNumber5()" class="page-link">5</button>
                             </li>
+                            <li class="page-item" v-bind:class="{ active: isActive5 }">
+                                <button @click="pageNumber5()" class="page-link">6</button>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -94,8 +123,6 @@
             </template>
             <w-form @submit.prevent="newFile">
                 <div class="form-group">
-                    <w-input v-model="id" required class="mb3" label="ID" color="info" outline>
-                    </w-input>
                 </div>
                 <div class="form-group">
                     <w-input v-model="node0" required class="mb3" label="Subject" color="info" outline>
@@ -161,12 +188,9 @@
 </template>
 
 <script>
-import Votes from "../components/Votes.vue";
 export default {
     name: "TableComponent",
-    components: {
-        Votes,
-    },
+
     data: () => ({
         dialog: {
             show: false,
@@ -191,9 +215,10 @@ export default {
         isActive4: false,
         isActive5: false,
         text: null,
+        showBadge: 0,
     }),
-    created(){
-this.pageNumber1()
+    created() {
+        this.pageNumber1();
     },
     methods: {
         buttonDoLoading(id) {
@@ -206,13 +231,13 @@ this.pageNumber1()
         newFile() {
             this.$store.dispatch("newFile");
             this.$store.dispatch("getDataFile");
-            this.pageNumber1();
+            this.pageNumber4()
         },
         changeColor() {
             this.color = "blue";
         },
         pageNumber1() {
-            this.rdfgraph = this.$store.state.rdfData.slice(0, 5);
+            this.rdfgraph = this.$store.state.rdfData.slice(0, 6);
             this.page1 = "1 - 5";
             this.isActive1 = true;
             this.isActive3 = false;
@@ -222,7 +247,7 @@ this.pageNumber1()
         },
 
         pageNumber2() {
-            this.rdfgraph = this.$store.state.rdfData.slice(5, 10);
+            this.rdfgraph = this.$store.state.rdfData.slice(6, 12);
             this.page1 = "6 - 10";
             this.isActive2 = true;
             this.isActive3 = false;
@@ -231,7 +256,7 @@ this.pageNumber1()
             this.isActive5 = false;
         },
         pageNumber3() {
-            this.rdfgraph = this.$store.state.rdfData.slice(10, 15);
+            this.rdfgraph = this.$store.state.rdfData.slice(12, 18);
             this.page1 = "11 - 15";
             this.isActive3 = true;
             this.isActive1 = false;
@@ -240,7 +265,7 @@ this.pageNumber1()
             this.isActive5 = false;
         },
         pageNumber4() {
-            this.rdfgraph = this.$store.state.rdfData.slice(15, 20);
+            this.rdfgraph = this.$store.state.rdfData.slice(18, 24);
             this.page1 = "16 - 20";
             this.isActive4 = true;
             this.isActive3 = false;
@@ -250,7 +275,7 @@ this.pageNumber1()
             console.log(this.rdfgraph);
         },
         pageNumber5() {
-            this.rdfgraph = this.$store.state.rdfData.slice(20, 2);
+            this.rdfgraph = this.$store.state.rdfData.slice(24, 30);
             this.page1 = "21 - 25";
             this.isActive5 = true;
             this.isActive3 = false;
@@ -262,6 +287,11 @@ this.pageNumber1()
     computed: {
         computedColor: function () {
             return this.color;
+        },
+        test123: {
+            get() {
+                return this.rdfgraph
+            }
         },
         id: {
             get() {
@@ -306,8 +336,6 @@ this.pageNumber1()
                 this.$store.commit("updateComment", value);
             },
         },
-
-       
     },
 };
 </script>

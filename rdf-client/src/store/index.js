@@ -32,7 +32,7 @@ export default createStore({
 
     //load rdf data
 
-    loadedRDFData:null,
+    loadedRDFData: null,
     //login failed
     showDialog: false,
 
@@ -43,6 +43,7 @@ export default createStore({
     node1: null,
     node2: null,
     comment: null,
+    votesNumber: 0,
 
     //Get individual rdf data from database
 
@@ -173,10 +174,10 @@ export default createStore({
       }))
     },
 
-    async gettripleData(filename){
-      console.log("fienammw",filename)
-      await axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response =>{
-        console.log("get filedatatat",response)
+    async gettripleData(filename) {
+      console.log("fienammw", filename)
+      await axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response => {
+        console.log("get filedatatat", response)
         this.state.rdfData = response.data
       })
     },
@@ -188,7 +189,10 @@ export default createStore({
         node0: this.state.node0,
         node1: this.state.node1,
         node2: this.state.node2,
-        comment: this.state.comment
+        comment: this.state.comment,
+        userName:this.state.currentUserData.firstName,
+        userLastName:this.state.currentUserData.lastName,
+        dateandtime:new Date().toJSON().slice(0,10).replace(/-/g,'/'),
       }).then((response) => {
         console.log(response)
         console.log("jsdjsnjsdnjsdjds")
@@ -197,7 +201,7 @@ export default createStore({
 
     async getDataFile() {
       this.state.rdfData = null
-     await  axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response => {
+      await axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response => {
         console.log(response.data)
         this.state.rdfData = response.data
 
@@ -205,7 +209,7 @@ export default createStore({
     },
 
 
-   
+
     getFileNames() {
       axios.get("http://localhost:4000/RDFfileName").then(response => {
         console.log(response.data[0])
