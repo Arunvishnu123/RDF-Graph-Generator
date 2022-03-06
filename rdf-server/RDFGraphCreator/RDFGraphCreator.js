@@ -1,7 +1,7 @@
-function RDFGraphGenerator(node0, node1, node2) {
+function RDFGraphGenerator(node0, node1, node2,propertyName) {
 
     let string1 = "qa:node1  rdfs:label \""
-    let string2 = "qa:language skos:altLabel \""
+    let string2 = `qa:${propertyName} skos:altLabel \"`
     let string3 = "qa:node2 rdfs:label \""
     let string4 = "qa:node1 qa:language qa:node2 . \n"
 
@@ -13,7 +13,7 @@ function RDFGraphGenerator(node0, node1, node2) {
     let frdfGraph1 = rdfGraph1.concat("\" .\n")
     let frdfGraph2 = rdfGraph2.concat("\" .\n")
     let frdfGraph3 = rdfGraph3.concat("\" .\n")
-    let test = frdfGraph1 + frdfGraph2 + frdfGraph3 + string4
+    let test = frdfGraph1 + frdfGraph2 + frdfGraph3 + string4 + "\n"
 
     return test
 

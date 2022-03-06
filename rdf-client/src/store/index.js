@@ -24,6 +24,17 @@ export default createStore({
       DOB: null,
     },
 
+    //selectedPropertyName
+    properties: [{
+      name: "Age"
+    },
+    {
+      name: "Language"
+    },
+    {
+      name: "DOB"
+    }],
+
     newFileName: "Dataset-",
 
     //total filenames
@@ -44,6 +55,7 @@ export default createStore({
     node2: null,
     comment: null,
     votesNumber: 0,
+    propertyName:null,
 
     //Get individual rdf data from database
 
@@ -114,6 +126,10 @@ export default createStore({
       state.comment = comment
     },
 
+    updatePropertyName(state, propertyName) {
+      state.propertyName = propertyName
+    },
+
     updateGetSelectedFile(state, getSelectedFile) {
       state.getSelectedFile = getSelectedFile
     },
@@ -179,6 +195,7 @@ export default createStore({
       await axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response => {
         console.log("get filedatatat", response)
         this.state.rdfData = response.data
+       
       })
     },
 
@@ -190,9 +207,10 @@ export default createStore({
         node1: this.state.node1,
         node2: this.state.node2,
         comment: this.state.comment,
-        userName:this.state.currentUserData.firstName,
-        userLastName:this.state.currentUserData.lastName,
-        dateandtime:new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+        propertyName:this.state.propertyName,
+        userName: this.state.currentUserData.firstName,
+        userLastName: this.state.currentUserData.lastName,
+        dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
       }).then((response) => {
         console.log(response)
         console.log("jsdjsnjsdnjsdjds")
@@ -239,8 +257,8 @@ export default createStore({
       })
     },
 
-    getrdfgraph() {
-      axios.get("http://localhost:4000/RDFGraph/" + this.state.fileName).then(response => {
+    async getrdfgraph() {
+      await axios.get("http://localhost:4000/RDFGraph/" + this.state.fileName).then(response => {
         console.log(response.data)
         this.state.generatedRDFGraph = response.data
         console.log(this.state.fileName)

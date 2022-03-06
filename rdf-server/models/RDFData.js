@@ -20,6 +20,12 @@ let RDFSchema = new rSchema({
   comment: {
     type: String
   },
+  propertyName: {
+    type: String
+  },
+  userName: {
+    type: String
+  },
 }, {
   collection: 'RDFData'
 })

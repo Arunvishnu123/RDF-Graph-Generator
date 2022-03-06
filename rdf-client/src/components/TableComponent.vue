@@ -124,9 +124,11 @@
             <w-form @submit.prevent="newFile">
                 <w-flex class="grow mx1" justify-center>
                     <div class="form-group">
-                        <w-select items="items" shadow color="info" outline>
-                            Property Name
-                        </w-select>
+                        <select class="selector" v-model="getSelectedPropertyName">
+                            <option value="test">--Please select a Property Name--</option>
+                            <option v-for="data in $store.state.properties" :key="data.id" :value="data.name">{{data.name}}</option>
+                        </select>
+
                     </div>
                 </w-flex>
                 <w-flex class="grow mx1" justify-center>
@@ -356,6 +358,14 @@ export default {
                 this.$store.commit("updateComment", value);
             },
         },
+        getSelectedPropertyName: {
+            get() {
+                return this.$store.state.propertyName
+            },
+            set(value) {
+                this.$store.commit("updatePropertyName", value)
+            }
+        }
     },
 };
 </script>
@@ -560,6 +570,10 @@ table.table .avatar {
     float: left;
     margin-top: 10px;
     font-size: 13px;
+}
+.selector{
+    border-block-color: rgb(52, 52, 207);
+    color:rgb(58, 58, 197);
 }
 
 /* Custom checkbox */

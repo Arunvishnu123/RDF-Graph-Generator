@@ -32,8 +32,8 @@
         </w-drawer>
 
         <div class="test">
-            <pre>
-            {{ text }}
+            <pre class="j">
+            {{$store.state.generatedRDFGraph }}
             </pre>
         </div>
 
@@ -76,16 +76,13 @@ export default {
     padding-top: 1px;
 }
 
-.test {
-    padding-bottom: 1px;
-}
 
 .download {
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
-    top: 383px;
+    top: 40px;
 }
 
 .bnavbar {
@@ -102,9 +99,9 @@ pre {
 pre {
     counter-reset: line-numbering;
     font-family: Menlo, Monaco, monospace;
-    background-color: #333;
+    background-color: rgb(235, 235, 235);
     padding: 5px;
-    color: #ccc;
+    color: rgb(223, 11, 11);
     border-radius: 3px;
     word-break: break-word;
 }
@@ -125,7 +122,10 @@ pre .line::before {
     left: 0x;
     top: 200px;
 }
-
+.test{
+     max-height: 600px;
+    overflow:scroll;
+}
 .about {
     position: absolute;
     width: 400px;

@@ -14,7 +14,10 @@
                     <h1 class="profile">Profile</h1>
                 </div>
                 <Avatar :avatar="text" />
-                <h1 class="name">{{$store.state.currentUserData.firstName}} {{$store.state.currentUserData.lastName}}</h1>
+                <h1 class="name">
+                    {{ $store.state.currentUserData.firstName }}
+                    {{ $store.state.currentUserData.lastName }}
+                </h1>
             </div>
         </div>
         <div class="dataset">
@@ -32,9 +35,9 @@
                     <h1 class="adddatasetr">Remove</h1>
                 </div>
             </div>
-            <div v-for= "data in $store.state.totalFileName" :key="data.id" class="edit">
+            <div v-for="data in $store.state.totalFileName" :key="data.id" class="edit">
                 <w-tag class="filename mr4" bg-color="info-dark3" outline xl color="white">
-                    {{data.fileName}}
+                    {{ data.fileName }}
                 </w-tag>
                 <w-button @click="navigate(data)" class="ma1" bg-color="info-dark3" color="white" outline xl>Access</w-button>
                 <w-button @click="test1(data)" class="remove ma1" bg-color="info-dark3" color="white" outline xl>Remove</w-button>
@@ -60,27 +63,26 @@ export default {
     }),
 
     methods: {
-      createNewFile(){
-          this.$store.dispatch("createFileName");
-      },
-      test1(data){
-          console.log(data.fileName)
-          this.$store.dispatch("deleteFileName",data.fileName)
-          this.$store.dispatch("getFileName")
-      },
-     async  navigate(data){
-          console.log(data.fileName) 
-          this.$store.state.fileName = data.fileName;
-         await  this.$store.dispatch("gettripleData",data.fileName)
-         await this.$router.push('/RDFGenerate')
-          
-      }
-
+        createNewFile() {
+            this.$store.dispatch("createFileName");
+        },
+        test1(data) {
+            console.log(data.fileName);
+            this.$store.dispatch("deleteFileName", data.fileName);
+            this.$store.dispatch("getFileName");
+        },
+        async navigate(data) {
+            console.log(data.fileName);
+            this.$store.state.fileName = data.fileName;
+            await this.$store.dispatch("gettripleData", data.fileName);
+            await this.$router.push("/RDFGenerate");
+            
+        },
     },
 
-    create(){
+    create() {
         this.$store.dispatch("createFileName");
-    }
+    },
 };
 </script>
 
@@ -203,5 +205,4 @@ export default {
 .adddataset {
     top: 20px;
 }
-
 </style>
