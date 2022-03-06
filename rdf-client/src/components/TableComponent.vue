@@ -123,7 +123,7 @@
             <w-form @submit.prevent="newFile">
                 <w-flex class="grow mx1">
                     <div class="form-group">
-                        <w-tag class="ma1" bg-color="info-dark2" color="white" xl>
+                        <w-tag class="ma1" bg-color="blue-light1" color="white" xl>
                             Select the Property type</w-tag>
                         <select class="selector" v-model="getSelectedPropertyName">
                             <option>--Please select a Property type--</option>
@@ -173,7 +173,7 @@
             <w-form @submit.prevent="editFile">
                 <w-flex class="grow mx1">
                     <div class="form-group">
-                        <w-tag class="ma1" bg-color="info-dark2" color="white" xl>
+                        <w-tag class="ma1" bg-color="blue-light1" color="white" xl>
                             Select the Property type</w-tag>
                         <select class="selector" v-model="editPropertyName">
                             <option value="test">--Please select a Property Name--</option>
