@@ -3,10 +3,15 @@
     <w-app>
         <div class="generate">
             <w-flex>
-                <w-button @click="generateRDFGraph" class="generteButton grow" bg-color="info-dark2" color="white">
-                    Generate RDF Graph
-                    <w-icon class="ml1">wi-chevron-right</w-icon>
-                </w-button>
+                <w-tooltip top>
+                    <template #activator="{ on }">
+                        <w-button  v-on="on" @click="generateRDFGraph" class="generteButton grow" bg-color="info-dark2" color="white">
+                            Generate RDF Graph
+                            <w-icon class="ml1">wi-chevron-right</w-icon>
+                        </w-button>
+                    </template>
+                    Click here to generate RDF Graph
+                </w-tooltip>
             </w-flex>
         </div>
     </w-app>

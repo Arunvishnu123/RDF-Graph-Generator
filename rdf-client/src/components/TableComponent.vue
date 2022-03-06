@@ -22,9 +22,14 @@
                                         Click here to add new triple
                                     </w-tooltip>
                                 </w-flex>
-                                <w-button @click="refresh()" bg-color="info-dark2" class="test1 px2">
-                                    <i class="fa fa-refresh" aria-hidden="true"></i>
-                                </w-button>
+                                <w-tooltip top>
+                                    <template #activator="{ on }">
+                                        <w-button v-on="on" @click="refresh()" bg-color="info-dark2" class="test1 px2">
+                                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                                        </w-button>
+                                    </template>
+                                    Click here to refresh the table
+                                </w-tooltip>
                             </div>
                         </div>
                     </div>
@@ -54,33 +59,57 @@
                                 <td>Arun</td>
                                 <td>{{ data.comment }}</td>
                                 <td>
-                                    <w-switch class="ma2" :model-value="false" color="success">
-                                    </w-switch>
+                                    <w-tooltip top>
+                                        <template #activator="{ on }">
+                                            <w-switch v-on="on" class="ma2" :model-value="false" color="success">
+                                            </w-switch>
+                                        </template>
+                                        Click here to approve the triple
+                                    </w-tooltip>
                                 </td>
 
                                 <td>
                                     <w-flex align-center>
+
                                         <w-badge class="mx6" v-model="showBadge" bg-color="error" overlap>
                                             <w-icon class="mr1" xl color="primary">
                                                 mdi mdi-thumb-up
                                             </w-icon>
                                         </w-badge>
-
-                                        <w-button v-if="$store.state.currentUserData.firstName != name" @click="showBadge++" icon="wi-plus" bg-color="success" sm>
-                                        </w-button>
+                                        <w-tooltip top>
+                                            <template #activator="{ on }">
+                                                <w-button v-on="on" v-if="$store.state.currentUserData.firstName != name" @click="showBadge++" icon="wi-plus" bg-color="success" sm>
+                                                </w-button>
+                                            </template>
+                                            Click here to vote the triple
+                                        </w-tooltip>
                                     </w-flex>
                                 </td>
 
                                 <td>
                                     <w-flex class="wrapper">
-                                        <w-button @click="editRDFData(data)" color="success" icon="fa fa-pencil-square-o">
-                                        </w-button>
+                                        <w-tooltip top>
+                                            <template #activator="{ on }">
+                                                <w-button v-on="on" @click="editRDFData(data)" color="success" icon="fa fa-pencil-square-o">
+                                                </w-button>
+                                            </template>
+                                            Click here to edit new triple
+                                        </w-tooltip>
                                         <span> </span>
-                                        <w-confirm question="Are you sure you want to delete this?" @confirm="test(data)" color="error" icon="mdi mdi-delete">
-                                            Delete
-                                        </w-confirm>
-
-                                        <w-button color="success" icon="fa fa-check"> </w-button>
+                                        <w-tooltip top>
+                                            <template #activator="{ on }">
+                                                <w-confirm v-on="on" question="Are you sure you want to delete this?" @confirm="test(data)" color="error" icon="mdi mdi-delete">
+                                                    Delete
+                                                </w-confirm>
+                                            </template>
+                                            Click here to delete new triple
+                                        </w-tooltip>
+                                        <w-tooltip top>
+                                            <template #activator="{ on }">
+                                                <w-button v-on="on" color="success" icon="fa fa-check"> </w-button>
+                                            </template>
+                                            Click here to update the votes and approval
+                                        </w-tooltip>
                                     </w-flex>
                                 </td>
                             </tr>
@@ -155,14 +184,14 @@
 
                 <div class="spacer" />
                 <w-flex justify-center>
-                <w-button xl @click="dialog.show = false">Close</w-button>
-                <w-button xl type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
-                    <w-icon class="mr1">wi-check</w-icon>
-                    Save
-                </w-button>
-                <w-button xl class="my1 mr2" bg-color="warning" type="reset">
-                    Reset
-                </w-button>
+                    <w-button xl @click="dialog.show = false">Close</w-button>
+                    <w-button xl type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
+                        <w-icon class="mr1">wi-check</w-icon>
+                        Save
+                    </w-button>
+                    <w-button xl class="my1 mr2" bg-color="warning" type="reset">
+                        Reset
+                    </w-button>
                 </w-flex>
             </w-form>
         </w-dialog>
@@ -275,14 +304,14 @@ export default {
         },
         test(data) {
             this.$store.state.editRDF.editid = data._id;
-            this.$store.dispatch("deleteRDFData")
-            console.log(data)
-            this.refresh()
+            this.$store.dispatch("deleteRDFData");
+            console.log(data);
+            this.refresh();
         },
         newFile() {
             this.$store.dispatch("newFile");
             this.$store.dispatch("getDataFile");
-            this.refresh()
+            this.refresh();
         },
         changeColor() {
             this.color = "blue";
@@ -353,7 +382,7 @@ export default {
         editFile() {
             this.$store.dispatch("updaterdfGraph");
             console.log("logged");
-            this.refresh()
+            this.refresh();
         },
     },
     computed: {
