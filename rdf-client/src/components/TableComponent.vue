@@ -123,7 +123,7 @@
             <w-form @submit.prevent="newFile">
                 <w-flex class="grow mx1">
                     <div class="form-group">
-                        <w-tag class="ma1" bg-color="blue-light1" color="white" xl>
+                        <w-tag class="ma1" bg-color="primary" color="white" xl>
                             Select the Property type</w-tag>
                         <select class="selector" v-model="getSelectedPropertyName">
                             <option>--Please select a Property type--</option>
@@ -154,14 +154,16 @@
                 </div>
 
                 <div class="spacer" />
-                <w-button @click="dialog.show = false">Close</w-button>
-                <w-button type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
+                <w-flex justify-center>
+                <w-button xl @click="dialog.show = false">Close</w-button>
+                <w-button xl type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
                     <w-icon class="mr1">wi-check</w-icon>
                     Save
                 </w-button>
-                <w-button class="my1 mr2" bg-color="warning" type="reset">
+                <w-button xl class="my1 mr2" bg-color="warning" type="reset">
                     Reset
                 </w-button>
+                </w-flex>
             </w-form>
         </w-dialog>
         <!-- Edit Modal HTML -->
@@ -173,7 +175,7 @@
             <w-form @submit.prevent="editFile">
                 <w-flex class="grow mx1">
                     <div class="form-group">
-                        <w-tag class="ma1" bg-color="blue-light1" color="white" xl>
+                        <w-tag class="ma1" bg-color="primary" color="white" xl>
                             Select the Property type</w-tag>
                         <select class="selector" v-model="editPropertyName">
                             <option value="test">--Please select a Property Name--</option>
@@ -204,14 +206,16 @@
                 </div>
 
                 <div class="spacer" />
-                <w-button @click="dialog1.show = false">Close</w-button>
-                <w-button type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
-                    <w-icon class="mr1">wi-check</w-icon>
-                    Save
-                </w-button>
-                <w-button class="my1 mr2" bg-color="warning" type="reset">
-                    Reset
-                </w-button>
+                <w-flex justify-center>
+                    <w-button @click="dialog1.show = false" xl>Close</w-button>
+                    <w-button xl type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
+                        <w-icon class="mr1">wi-check</w-icon>
+                        Save
+                    </w-button>
+                    <w-button xl class="my1 mr2" bg-color="warning" type="reset">
+                        Reset
+                    </w-button>
+                </w-flex>
             </w-form>
         </w-dialog>
 
@@ -270,20 +274,21 @@ export default {
             setTimeout(() => (this[`button${id}loading`] = false), 3000);
         },
         test(data) {
-             this.$store.state.editRDF.editid = data._id;
+            this.$store.state.editRDF.editid = data._id;
             this.$store.dispatch("deleteRDFData")
             console.log(data)
+            this.refresh()
         },
         newFile() {
             this.$store.dispatch("newFile");
             this.$store.dispatch("getDataFile");
-            this.pageNumber4();
+            this.refresh()
         },
         changeColor() {
             this.color = "blue";
         },
         async refresh() {
-            await this.$store.dispatch("gettripleData",this.$store.state.fileName);
+            await this.$store.dispatch("gettripleData", this.$store.state.fileName);
             this.rdfgraph = this.$store.state.rdfData.slice(0, 6);
         },
         pageNumber1() {
@@ -348,6 +353,7 @@ export default {
         editFile() {
             this.$store.dispatch("updaterdfGraph");
             console.log("logged");
+            this.refresh()
         },
     },
     computed: {
