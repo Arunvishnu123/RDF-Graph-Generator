@@ -22,6 +22,9 @@
                                         Click here to add new triple
                                     </w-tooltip>
                                 </w-flex>
+                                <w-button @click="refresh()" bg-color="info-dark2" class="test1 px2">
+                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                </w-button>
                             </div>
                         </div>
                     </div>
@@ -34,7 +37,7 @@
                                 <th>Object/ Value</th>
                                 <th>Editor Name</th>
                                 <th>Comments</th>
-                                <th>Approve/ Disapprove</th>
+                                <th>Approve/ <br />Disapprove</th>
                                 <th>Votes</th>
 
                                 <th>Actions</th>
@@ -42,7 +45,7 @@
                         </thead>
 
                         <tbody>
-                            <tr v-for="data in test123" :key="data.id">
+                            <tr v-for="data in rdfgraph" :key="data.id">
                                 <td>{{ data.num }}</td>
                                 <td>{{ data.node0 }}</td>
                                 <td>{{ data.node1 }}</td>
@@ -57,31 +60,27 @@
 
                                 <td>
                                     <w-flex align-center>
-                                        <w-button @click="showBadge--" icon="wi-minus" bg-color="success" sm>
-                                        </w-button>
-
                                         <w-badge class="mx6" v-model="showBadge" bg-color="error" overlap>
                                             <w-icon class="mr1" xl color="primary">
                                                 mdi mdi-thumb-up
                                             </w-icon>
                                         </w-badge>
 
-                                        <w-button @click="showBadge++" icon="wi-plus" bg-color="success" sm>
+                                        <w-button v-if="$store.state.currentUserData.firstName != name" @click="showBadge++" icon="wi-plus" bg-color="success" sm>
                                         </w-button>
                                     </w-flex>
                                 </td>
 
                                 <td>
                                     <w-flex class="wrapper">
-                                        <w-button color="success" icon="fa fa-pencil-square-o" @click="dialog1.show = true">
+                                        <w-button @click="editRDFData(data)" color="success" icon="fa fa-pencil-square-o">
                                         </w-button>
                                         <span> </span>
-                                        <w-confirm question="Are you sure you want to delete this?" @confirm="test" color="error" icon="mdi mdi-delete">
+                                        <w-confirm question="Are you sure you want to delete this?" @confirm="test(data)" color="error" icon="mdi mdi-delete">
                                             Delete
                                         </w-confirm>
 
-                                        <w-button color="success" icon="fa fa-check">
-                                        </w-button>
+                                        <w-button color="success" icon="fa fa-check"> </w-button>
                                     </w-flex>
                                 </td>
                             </tr>
@@ -117,18 +116,21 @@
         </div>
         <!-- Edit Modal HTML -->
         <w-dialog v-model="dialog.show" :fullscreen="dialog.fullscreen" :width="dialog.width" :persistent="dialog.persistent" :persistent-no-animation="dialog.persistentNoAnimation" title-class="primary-light1--bg white">
-            <template #title>
+            <template bg-color="info-dark3" #title>
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
-                Add Data
+                Add New RDF Triple
             </template>
             <w-form @submit.prevent="newFile">
-                <w-flex class="grow mx1" justify-center>
+                <w-flex class="grow mx1">
                     <div class="form-group">
+                        <w-tag class="ma1" bg-color="info-dark2" color="white" xl>
+                            Select the Property type</w-tag>
                         <select class="selector" v-model="getSelectedPropertyName">
-                            <option value="test">--Please select a Property Name--</option>
-                            <option v-for="data in $store.state.properties" :key="data.id" :value="data.name">{{data.name}}</option>
+                            <option>--Please select a Property type--</option>
+                            <option v-for="data in $store.state.properties" :key="data.id" :value="data.name">
+                                {{ data.name }}
+                            </option>
                         </select>
-
                     </div>
                 </w-flex>
                 <w-flex class="grow mx1" justify-center>
@@ -147,7 +149,7 @@
                 </w-flex>
                 <div class="form-group">
                     <w-textarea v-model="comment" required class="mt4" outline color="blue">
-                        Comments
+                        Add Comments
                     </w-textarea>
                 </div>
 
@@ -164,34 +166,53 @@
         </w-dialog>
         <!-- Edit Modal HTML -->
         <w-dialog v-model="dialog1.show" :fullscreen="dialog1.fullscreen" :width="dialog.width" :persistent="dialog1.persistent" :persistent-no-animation="dialog1.persistentNoAnimation" title-class="primary-light1--bg white">
-            <template bg-color="info-dark2" #title>
+            <template bg-color="info-dark3" #title>
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
-                Edit Data
+                Edit Selected RDF Triple
             </template>
-            <w-flex>
+            <w-form @submit.prevent="editFile">
+                <w-flex class="grow mx1">
+                    <div class="form-group">
+                        <w-tag class="ma1" bg-color="info-dark2" color="white" xl>
+                            Select the Property type</w-tag>
+                        <select class="selector" v-model="editPropertyName">
+                            <option value="test">--Please select a Property Name--</option>
+                            <option v-for="data in $store.state.properties" :key="data.id" :value="data.name">
+                                {{ data.name }}
+                            </option>
+                        </select>
+                    </div>
+                </w-flex>
+                <w-flex justify-center>
+                    <div class="form-group">
+                        <w-input v-model="editnode0" class="mb3" label="Subject" color="info" outline>
+                        </w-input>
+                    </div>
+                    <div class="form-group">
+                        <w-input v-model="editnode1" class="mb3" label="Property" color="info" outline>
+                        </w-input>
+                    </div>
+                    <div class="form-group">
+                        <w-input v-model="editnode2" class="mb3" label="Value/Object" color="info" outline>
+                        </w-input>
+                    </div>
+                </w-flex>
                 <div class="form-group">
-                    <w-input class="mb3" label="Node 0" color="info" outline> </w-input>
+                    <w-textarea v-model="editComment" class="mt4" outline color="blue">
+                        Comments
+                    </w-textarea>
                 </div>
-                <div class="form-group">
-                    <w-input class="mb3" label="Node 1" color="info" outline> </w-input>
-                </div>
-                <div class="form-group">
-                    <w-input class="mb3" label="Node 2" color="info" outline> </w-input>
-                </div>
-            </w-flex>
-            <div class="form-group">
-                <w-textarea class="mt4" outline color="blue"> Comments </w-textarea>
-            </div>
 
-            <template #actions>
                 <div class="spacer" />
                 <w-button @click="dialog1.show = false">Close</w-button>
-                <w-button class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
+                <w-button type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
                     <w-icon class="mr1">wi-check</w-icon>
                     Save
                 </w-button>
-
-            </template>
+                <w-button class="my1 mr2" bg-color="warning" type="reset">
+                    Reset
+                </w-button>
+            </w-form>
         </w-dialog>
 
         <!-- Delete Modal HTML -->
@@ -211,6 +232,7 @@ export default {
             persistentNoAnimation: false,
             width: 700,
         },
+        name: "Arun",
         dialog1: {
             show: false,
             fullscreen: false,
@@ -229,15 +251,15 @@ export default {
         text: null,
         showBadge: 0,
         items: [{
-                label: 'Item 1'
+                label: "Item 1",
             },
             {
-                label: 'Item 2'
+                label: "Item 2",
             },
             {
-                label: 'Item 3'
-            }
-        ]
+                label: "Item 3",
+            },
+        ],
     }),
     created() {
         this.pageNumber1();
@@ -247,16 +269,22 @@ export default {
             this[`button${id}loading`] = true;
             setTimeout(() => (this[`button${id}loading`] = false), 3000);
         },
-        test() {
-            console.log("pront");
+        test(data) {
+             this.$store.state.editRDF.editid = data._id;
+            this.$store.dispatch("deleteRDFData")
+            console.log(data)
         },
         newFile() {
             this.$store.dispatch("newFile");
             this.$store.dispatch("getDataFile");
-            this.pageNumber4()
+            this.pageNumber4();
         },
         changeColor() {
             this.color = "blue";
+        },
+        async refresh() {
+            await this.$store.dispatch("gettripleData",this.$store.state.fileName);
+            this.rdfgraph = this.$store.state.rdfData.slice(0, 6);
         },
         pageNumber1() {
             this.rdfgraph = this.$store.state.rdfData.slice(0, 6);
@@ -266,6 +294,18 @@ export default {
             this.isActive4 = false;
             this.isActive2 = false;
             this.isActive5 = false;
+        },
+
+        editRDFData(data) {
+            this.dialog1.show = true;
+            console.log(data);
+            this.$store.state.editRDF.editNode0 = data.node0;
+            this.$store.state.editRDF.editNode1 = data.node1;
+            this.$store.state.editRDF.editNode2 = data.node2;
+            this.$store.state.editRDF.editPropertyName = data.propertyName;
+            this.$store.state.editRDF.editComment = data.comment;
+            this.$store.state.editRDF.editid = data._id;
+            console.log(data._id);
         },
 
         pageNumber2() {
@@ -305,6 +345,10 @@ export default {
             this.isActive2 = false;
             this.isActive1 = false;
         },
+        editFile() {
+            this.$store.dispatch("updaterdfGraph");
+            console.log("logged");
+        },
     },
     computed: {
         computedColor: function () {
@@ -312,8 +356,8 @@ export default {
         },
         test123: {
             get() {
-                return this.rdfgraph
-            }
+                return this.rdfgraph;
+            },
         },
         id: {
             get() {
@@ -360,12 +404,53 @@ export default {
         },
         getSelectedPropertyName: {
             get() {
-                return this.$store.state.propertyName
+                return this.$store.state.propertyName;
             },
             set(value) {
-                this.$store.commit("updatePropertyName", value)
-            }
-        }
+                this.$store.commit("updatePropertyName", value);
+            },
+        },
+
+        editnode0: {
+            get() {
+                return this.$store.state.editRDF.editNode0;
+            },
+            set(value) {
+                this.$store.commit("updateEditNode0", value);
+            },
+        },
+        editnode1: {
+            get() {
+                return this.$store.state.editRDF.editNode1;
+            },
+            set(value) {
+                this.$store.commit("updateEditNode1", value);
+            },
+        },
+        editnode2: {
+            get() {
+                return this.$store.state.editRDF.editNode2;
+            },
+            set(value) {
+                this.$store.commit("updateEditNode2", value);
+            },
+        },
+        editPropertyName: {
+            get() {
+                return this.$store.state.editRDF.editPropertyName;
+            },
+            set(value) {
+                this.$store.commit("updateEditPropertyName", value);
+            },
+        },
+        editComment: {
+            get() {
+                return this.$store.state.editRDF.editComment;
+            },
+            set(value) {
+                this.$store.commit("updateEditComment", value);
+            },
+        },
     },
 };
 </script>
@@ -390,7 +475,7 @@ body {
 
 .test {
     position: absolute;
-    left: 360px;
+    left: 300px;
     top: 1.6px;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
@@ -400,7 +485,8 @@ body {
 
 .test1 {
     position: absolute;
-    left: 400px;
+    left: 420px;
+    top: 2px;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -571,9 +657,10 @@ table.table .avatar {
     margin-top: 10px;
     font-size: 13px;
 }
-.selector{
+
+.selector {
     border-block-color: rgb(52, 52, 207);
-    color:rgb(58, 58, 197);
+    color: rgb(58, 58, 197);
 }
 
 /* Custom checkbox */

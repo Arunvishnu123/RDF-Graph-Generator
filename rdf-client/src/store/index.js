@@ -55,7 +55,7 @@ export default createStore({
     node2: null,
     comment: null,
     votesNumber: 0,
-    propertyName:null,
+    propertyName: null,
 
     //Get individual rdf data from database
 
@@ -70,7 +70,16 @@ export default createStore({
 
     // generated rdf graph
 
-    generatedRDFGraph: null
+    generatedRDFGraph: null,
+
+    editRDF: {
+      editNode0: null,
+      editNode1: null,
+      editNode2: null,
+      editPropertyName: null,
+      editComment: null,
+      editid: null
+    }
 
   },
   mutations: {
@@ -134,7 +143,23 @@ export default createStore({
       state.getSelectedFile = getSelectedFile
     },
 
+    updateEditNode0(state, editNode0) {
+      state.editRDF.editNode0 = editNode0
+    },
 
+    updateEditNode1(state, editNode1) {
+      state.editRDF.editNode1 = editNode1
+    },
+    updateEditNode2(state, editNode2) {
+      state.editRDF.editNode2 = editNode2
+    },
+    updateEditPropertyName(state, editPropertyName) {
+      state.editRDF.editPropertyName = editPropertyName
+    },
+
+    updateEditComment(state, editComment) {
+      state.editRDF.editComment = editComment
+    },
   },
   actions: {
     async createUsers() {
@@ -195,7 +220,7 @@ export default createStore({
       await axios.get("http://localhost:4000/RDFData/" + this.state.fileName).then(response => {
         console.log("get filedatatat", response)
         this.state.rdfData = response.data
-       
+
       })
     },
 
@@ -207,7 +232,7 @@ export default createStore({
         node1: this.state.node1,
         node2: this.state.node2,
         comment: this.state.comment,
-        propertyName:this.state.propertyName,
+        propertyName: this.state.propertyName,
         userName: this.state.currentUserData.firstName,
         userLastName: this.state.currentUserData.lastName,
         dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
@@ -262,6 +287,25 @@ export default createStore({
         console.log(response.data)
         this.state.generatedRDFGraph = response.data
         console.log(this.state.fileName)
+      })
+    },
+
+    async updaterdfGraph() {
+      await axios.put("http://localhost:4000/RDFGraph/" + this.state.editRDF.editid, {
+        node0: this.state.editRDF.editNode0,
+        node1: this.state.editRDF.editNode1,
+        node2: this.state.editRDF.editNode2,
+        comment: this.state.editRDF.editComment,
+        propertyName: this.state.editRDF.editPropertyName
+      }).then(response => {
+        console.log(response)
+       /// this.state.rdfData.filter(v => v.id == this.state.editRDF.editid)
+      })
+    },
+
+    async deleteRDFData(){
+      await axios.delete("http://localhost:4000/deleteRDFData/" + this.state.editRDF.editid ).then(response =>{
+        console.log(response)
       })
     }
   },
