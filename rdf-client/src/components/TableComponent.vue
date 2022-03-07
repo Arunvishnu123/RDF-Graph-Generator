@@ -13,23 +13,17 @@
                             </div>
                             <div class="col-sm-6">
                                 <w-flex>
-                                    <w-tooltip top>
-                                        <template #activator="{ on }">
-                                            <w-button v-on="on" bg-color="info-dark2" class="test px2" @click="dialog.show = true">
+                                   
+                                            <w-button  bg-color="info-dark2" class="test px2" @click="dialog.show = true">
                                                 Add New Triple
                                             </w-button>
-                                        </template>
-                                        Click here to add new triple
-                                    </w-tooltip>
+                                        
                                 </w-flex>
-                                <w-tooltip top>
-                                    <template #activator="{ on }">
-                                        <w-button v-on="on" @click="refresh()" bg-color="info-dark2" class="test1 px2">
+                              
+                                        <w-button  @click="refresh()" bg-color="info-dark2" class="test1 px2">
                                             <i class="fa fa-refresh" aria-hidden="true"></i>
                                         </w-button>
-                                    </template>
-                                    Click here to refresh the table
-                                </w-tooltip>
+                                  
                             </div>
                         </div>
                     </div>
@@ -59,13 +53,10 @@
                                 <td>Arun</td>
                                 <td>{{ data.comment }}</td>
                                 <td>
-                                    <w-tooltip top>
-                                        <template #activator="{ on }">
-                                            <w-switch v-on="on" class="ma2" :model-value="false" color="success">
+                                   
+                                            <w-switch  class="ma2" :model-value="false" color="success">
                                             </w-switch>
-                                        </template>
-                                        Click here to approve the triple
-                                    </w-tooltip>
+                                       
                                 </td>
 
                                 <td>
@@ -76,40 +67,27 @@
                                                 mdi mdi-thumb-up
                                             </w-icon>
                                         </w-badge>
-                                        <w-tooltip top>
-                                            <template #activator="{ on }">
-                                                <w-button v-on="on" v-if="$store.state.currentUserData.firstName != name" @click="showBadge++" icon="wi-plus" bg-color="success" sm>
+                                       
+                                                <w-button v-on="on4" v-if="$store.state.currentUserData.firstName != name" @click="showBadge++" icon="wi-plus" bg-color="success" sm>
                                                 </w-button>
-                                            </template>
-                                            Click here to vote the triple
-                                        </w-tooltip>
+                                           
                                     </w-flex>
                                 </td>
 
                                 <td>
                                     <w-flex class="wrapper">
-                                        <w-tooltip top>
-                                            <template #activator="{ on }">
-                                                <w-button v-on="on" @click="editRDFData(data)" color="success" icon="fa fa-pencil-square-o">
+                                        
+                                                <w-button @click="editRDFData(data)" color="success" icon="fa fa-pencil-square-o">
                                                 </w-button>
-                                            </template>
-                                            Click here to edit new triple
-                                        </w-tooltip>
+                                           
                                         <span> </span>
-                                        <w-tooltip top>
-                                            <template #activator="{ on }">
-                                                <w-confirm v-on="on" question="Are you sure you want to delete this?" @confirm="test(data)" color="error" icon="mdi mdi-delete">
-                                                    Delete
-                                                </w-confirm>
-                                            </template>
-                                            Click here to delete new triple
-                                        </w-tooltip>
-                                        <w-tooltip top>
-                                            <template #activator="{ on }">
-                                                <w-button v-on="on" color="success" icon="fa fa-check"> </w-button>
-                                            </template>
-                                            Click here to update the votes and approval
-                                        </w-tooltip>
+
+                                        <w-confirm question="Are you sure you want to delete this?" @confirm="test(data)" color="error" icon="mdi mdi-delete">
+                                            Delete
+                                        </w-confirm>
+
+                                        <w-button color="success" icon="fa fa-check"> </w-button>
+
                                     </w-flex>
                                 </td>
                             </tr>
