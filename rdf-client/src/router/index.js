@@ -3,6 +3,7 @@ import HomePage from "../views/HomePage.vue";
 import RDFGenerate from "../views/RDFGeneratorPage.vue";
 import Main from "../views/MainPage.vue";
 import profile from "../views/Profile.vue";
+import test from "../views/Tesxt.vue";
 const routes = [
   {
     path: "/",
@@ -23,6 +24,12 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: profile,
+  },
+
+  {
+    path: "/p",
+    name: "test",
+    component:test,
   },
 
 ];

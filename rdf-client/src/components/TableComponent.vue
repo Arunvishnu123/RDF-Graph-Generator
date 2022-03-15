@@ -13,24 +13,22 @@
                             </div>
                             <div class="col-sm-6">
                                 <w-flex>
-                                   
-                                            <w-button  bg-color="info-dark2" class="test px2" @click="dialog.show = true">
-                                                Add New Triple
-                                            </w-button>
-                                        
+                                    <w-button bg-color="info-dark2" class="test px2" @click="dialog.show = true">
+                                        Add New Triple
+                                    </w-button>
                                 </w-flex>
-                              
-                                        <w-button  @click="refresh()" bg-color="info-dark2" class="test1 px2">
-                                            <i class="fa fa-refresh" aria-hidden="true"></i>
-                                        </w-button>
-                                  
+                                <w-button class="test123" bg-color="info-dark2" @click="dialog2.show = true">
+                                    Upload Triples
+                                </w-button>
+                                <w-button @click="refresh()" bg-color="info-dark2" class="test1 px2">
+                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                </w-button>
                             </div>
                         </div>
                     </div>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Subject</th>
                                 <th>Property</th>
                                 <th>Object/ Value</th>
@@ -45,7 +43,6 @@
 
                         <tbody>
                             <tr v-for="data in rdfgraph" :key="data.id">
-                                <td>{{ data.num }}</td>
                                 <td>{{ data.node0 }}</td>
                                 <td>{{ data.node1 }}</td>
                                 <td>{{ data.node2 }}</td>
@@ -53,33 +50,28 @@
                                 <td>Arun</td>
                                 <td>{{ data.comment }}</td>
                                 <td>
-                                   
-                                            <w-switch  class="ma2" :model-value="false" color="success">
-                                            </w-switch>
-                                       
+                                    <w-switch class="ma2" :model-value="false" color="success">
+                                    </w-switch>
                                 </td>
 
                                 <td>
                                     <w-flex align-center>
-
                                         <w-badge class="mx6" v-model="showBadge" bg-color="error" overlap>
                                             <w-icon class="mr1" xl color="primary">
                                                 mdi mdi-thumb-up
                                             </w-icon>
                                         </w-badge>
-                                       
-                                                <w-button v-on="on4" v-if="$store.state.currentUserData.firstName != name" @click="showBadge++" icon="wi-plus" bg-color="success" sm>
-                                                </w-button>
-                                           
+
+                                        <w-button v-on="on4" v-if="$store.state.currentUserData.firstName != name" @click="showBadge++" icon="wi-plus" bg-color="success" sm>
+                                        </w-button>
                                     </w-flex>
                                 </td>
 
                                 <td>
                                     <w-flex class="wrapper">
-                                        
-                                                <w-button @click="editRDFData(data)" color="success" icon="fa fa-pencil-square-o">
-                                                </w-button>
-                                           
+                                        <w-button @click="editRDFData(data)" color="success" icon="fa fa-pencil-square-o">
+                                        </w-button>
+
                                         <span> </span>
 
                                         <w-confirm question="Are you sure you want to delete this?" @confirm="test(data)" color="error" icon="mdi mdi-delete">
@@ -87,7 +79,6 @@
                                         </w-confirm>
 
                                         <w-button color="success" icon="fa fa-check"> </w-button>
-
                                     </w-flex>
                                 </td>
                             </tr>
@@ -225,15 +216,33 @@
                 </w-flex>
             </w-form>
         </w-dialog>
-
         <!-- Delete Modal HTML -->
+        <w-dialog v-model="dialog2.show" :fullscreen="dialog2.fullscreen" :width="dialog2.width" :persistent="dialog2.persistent" :persistent-no-animation="dialog2.persistentNoAnimation" title-class="primary-light1--bg white">
+            <template bg-color="info-dark2" #title>
+                <w-icon class="mr2">mdi mdi-tune</w-icon>
+                Upload Triples via CSV Format
+            </template>
+            <w-flex>
+                <text-reader class="grow" @load="text1 = $event"></text-reader>
+            </w-flex>
+            <w-flex>
+                <w-button class="grow" bg-color="info-dark2" color="white" @click="dialog2.show = false">Close</w-button>
+                <w-button class="grow" @click="fileReader()" bg-color="info-dark2" color="white">Save</w-button>
+            </w-flex>
+        </w-dialog>
+
     </w-app>
 </div>
 </template>
 
 <script>
+import axios from "axios";
+import TextReader from './TextReader.vue'
 export default {
     name: "TableComponent",
+    components: {
+        TextReader
+    },
 
     data: () => ({
         dialog: {
@@ -251,6 +260,13 @@ export default {
             persistentNoAnimation: false,
             width: 500,
         },
+        dialog2: {
+            show: false,
+            fullscreen: false,
+            persistent: false,
+            persistentNoAnimation: false,
+            width: 400
+        },
         button1loading: false,
         button2loading: false,
         rdfgraph: null,
@@ -260,6 +276,7 @@ export default {
         isActive4: false,
         isActive5: false,
         text: null,
+        text1: null,
         showBadge: 0,
         items: [{
                 label: "Item 1",
@@ -279,6 +296,34 @@ export default {
         buttonDoLoading(id) {
             this[`button${id}loading`] = true;
             setTimeout(() => (this[`button${id}loading`] = false), 3000);
+        },
+        async fileReader() {
+            console.log(this.text1)
+            const lines = this.text1.split('\n') // 1️⃣
+            const header = lines[0].split(',') // 2️⃣
+            const output = lines.slice(1).map(line => {
+                const fields = line.split(',') // 3️⃣
+                return Object.fromEntries(header.map((h, i) => [h, fields[i]])) // 4️⃣
+            })
+            console.log(output)
+            for (let t of output) {
+                console.log("vvvvvvvvvvvvvvvvvvvvvvvvvv",t.comment)
+                await axios.post("http://localhost:4000/createfile", {
+                    fileName:this. $store.state.fileName,
+                    num: null,
+                    node0: t.node0,
+                    node1: t.node1,
+                    node2: t.node2,
+                    comment: t.comment ,
+                    propertyName: null,
+                    userName: this.$store.state.currentUserData.firstName,
+                    userLastName: this.$store.state.currentUserData.lastName,
+                    dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
+                }).then((response) => {
+                    console.log(response)
+                    console.log("jsdjsnjsdnjsdjds")
+                });
+            }
         },
         test(data) {
             this.$store.state.editRDF.editid = data._id;
@@ -488,8 +533,17 @@ body {
 
 .test {
     position: absolute;
-    left: 300px;
+    left: 180px;
     top: 1.6px;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+}
+
+.test123 {
+    position: absolute;
+    left: 300px;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
