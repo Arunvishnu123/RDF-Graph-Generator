@@ -210,6 +210,7 @@
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
                 Disucssion Forum
             </template>
+            
             <w-flex>
                 <w-button class="closebutton grow" bg-color="info-dark2" sm outline round absolute icon="wi-cross" color="white" @click="dialog3.show = false">Close</w-button>
             </w-flex>
