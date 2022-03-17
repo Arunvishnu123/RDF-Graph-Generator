@@ -17,9 +17,6 @@
                                         Add New Triple
                                     </w-button>
                                 </w-flex>
-                                <w-button class="test123" bg-color="info-dark2" @click="dialog2.show = true">
-                                    Upload Triples
-                                </w-button>
                                 <w-button @click="refresh()" bg-color="info-dark2" class="test1 px2">
                                     <i class="fa fa-refresh" aria-hidden="true"></i>
                                 </w-button>
@@ -36,7 +33,6 @@
                                 <th>Comments</th>
                                 <th>Approve/ <br />Disapprove</th>
                                 <th>Votes</th>
-
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -117,6 +113,12 @@
             <template bg-color="info-dark3" #title>
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
                 Add New RDF Triple
+                  <w-button class="uploadProper ma1" bg-color="info-dark2" @click="dialog2.show = true">
+                        Upload Properties in csv format
+                    </w-button>
+                   <w-button class="test123" bg-color="info-dark2" @click="dialog2.show = true">
+                        Upload Triples in csv format
+                    </w-button>
             </template>
             <w-form @submit.prevent="newFile">
                 <w-flex class="grow mx1">
@@ -129,6 +131,7 @@
                                 {{ data.name }}
                             </option>
                         </select>
+                     
                     </div>
                 </w-flex>
                 <w-flex class="grow mx1" justify-center>
@@ -150,17 +153,18 @@
                         Add Comments
                     </w-textarea>
                 </div>
-
                 <div class="spacer" />
+
                 <w-flex justify-center>
-                    <w-button xl @click="dialog.show = false">Close</w-button>
-                    <w-button xl type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
+                    <w-button class="ma1 grow" xl @click="dialog.show = false">Close</w-button>
+                     <w-button xl class="ma1 grow" bg-color="warning" type="reset">
+                        Reset
+                    </w-button>
+                    <w-button xl type="submit" class="ma1 grow" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
                         <w-icon class="mr1">wi-check</w-icon>
                         Save
                     </w-button>
-                    <w-button xl class="my1 mr2" bg-color="warning" type="reset">
-                        Reset
-                    </w-button>
+                   
                 </w-flex>
             </w-form>
         </w-dialog>
@@ -205,14 +209,15 @@
 
                 <div class="spacer" />
                 <w-flex justify-center>
-                    <w-button @click="dialog1.show = false" xl>Close</w-button>
-                    <w-button xl type="submit" class="ma1" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
+                    <w-button class="ma1 grow" @click="dialog1.show = false" xl>Close</w-button>
+                    <w-button xl class="ma1 grow" bg-color="warning" type="reset">
+                        Reset
+                    </w-button>
+                    <w-button xl type="submit" class="ma1 grow" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
                         <w-icon class="mr1">wi-check</w-icon>
                         Save
                     </w-button>
-                    <w-button xl class="my1 mr2" bg-color="warning" type="reset">
-                        Reset
-                    </w-button>
+                    
                 </w-flex>
             </w-form>
         </w-dialog>
@@ -230,7 +235,6 @@
                 <w-button class="grow" @click="fileReader()" bg-color="info-dark2" color="white">Save</w-button>
             </w-flex>
         </w-dialog>
-
     </w-app>
 </div>
 </template>
@@ -307,21 +311,20 @@ export default {
             })
             console.log(output)
             for (let t of output) {
-                console.log("vvvvvvvvvvvvvvvvvvvvvvvvvv",t.comment)
+                console.log(t)
                 await axios.post("http://localhost:4000/createfile", {
-                    fileName:this. $store.state.fileName,
+                    fileName: this.$store.state.fileName,
                     num: null,
                     node0: t.node0,
                     node1: t.node1,
                     node2: t.node2,
-                    comment: t.comment ,
+                    comment: t.comment,
                     propertyName: null,
                     userName: this.$store.state.currentUserData.firstName,
                     userLastName: this.$store.state.currentUserData.lastName,
                     dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
                 }).then((response) => {
                     console.log(response)
-                    console.log("jsdjsnjsdnjsdjds")
                 });
             }
         },
@@ -533,7 +536,7 @@ body {
 
 .test {
     position: absolute;
-    left: 180px;
+    left: 300px;
     top: 1.6px;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
@@ -543,11 +546,19 @@ body {
 
 .test123 {
     position: absolute;
-    left: 300px;
+    left: 500px;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 15px;
+}
+.uploadProper{
+     position: absolute;
+    left: 280px;
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;  
 }
 
 .test1 {
