@@ -213,6 +213,17 @@
             <w-flex>
                 <w-button class="closebutton grow" bg-color="info-dark2" sm outline round absolute icon="wi-cross" color="white" @click="dialog3.show = false">Close</w-button>
             </w-flex>
+            <pre class="chatmess">
+            Arun:Hi please do the edit 
+            </pre>
+            <w-flex class="mes">
+                <w-textarea label="Message" label-position="inside" outline inner-icon-left="mdi mdi-email">
+                </w-textarea>
+            </w-flex>
+            <w-flex>
+                <w-button class="sendbutton grow" bg-color="info-dark2" color="white">Send</w-button>
+            </w-flex>
+
         </w-dialog>
 
         <!-- invitation forum Modal HTML -->
@@ -916,6 +927,11 @@ table.table .avatar {
     background: #ddd;
 }
 
+.sendbutton {
+    padding: 10px;
+    height: 100px
+}
+
 /* Modal styles */
 .modal .modal-dialog {
     max-width: 400px;
@@ -955,7 +971,9 @@ table.table .avatar {
     border-radius: 2px;
     min-width: 100px;
 }
-
+.chatmess{
+    left:0px;
+}
 .modal form label {
     font-weight: normal;
 }
