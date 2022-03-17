@@ -13,6 +13,12 @@
                             </div>
                             <div class="col-sm-6">
                                 <w-flex>
+                                    <w-button bg-color="info-dark2" class="invitation px2" @click="dialog.show = true">
+                                        Invite Peoples
+                                    </w-button>
+                                    <w-button bg-color="info-dark2" class="discussion px2" @click="dialog.show = true">
+                                        Discussion Form
+                                    </w-button>
                                     <w-button bg-color="info-dark2" class="test px2" @click="dialog.show = true">
                                         Add New Triple
                                     </w-button>
@@ -109,67 +115,38 @@
             </div>
         </div>
         <!-- Edit Modal HTML -->
-        <w-dialog v-model="dialog.show" :fullscreen="dialog.fullscreen" :width="dialog.width" :persistent="dialog.persistent" :persistent-no-animation="dialog.persistentNoAnimation" title-class="primary-light1--bg white">
+        <w-dialog v-model="dialog.show" :fullscreen="dialog.fullscreen" :width="dialog.width" persistent title-class="primary-light1--bg white">
             <template bg-color="info-dark3" #title>
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
                 Add New RDF Triple
-                  <w-button class="uploadProper ma1" bg-color="info-dark2" @click="dialog2.show = true">
-                        Upload Properties in csv format
-                    </w-button>
-                   <w-button class="test123" bg-color="info-dark2" @click="dialog2.show = true">
-                        Upload Triples in csv format
-                    </w-button>
+                <w-button class="test123" bg-color="info-dark2" @click="dialog2.show = true">
+                    Upload Triples in csv format
+                </w-button>
             </template>
-            <w-form @submit.prevent="newFile">
-                <w-flex class="grow mx1">
-                    <div class="form-group">
-                        <w-tag class="ma1" bg-color="primary" color="white" xl>
-                            Select the Property type</w-tag>
-                        <select class="selector" v-model="getSelectedPropertyName">
-                            <option>--Please select a Property type--</option>
-                            <option v-for="data in $store.state.properties" :key="data.id" :value="data.name">
-                                {{ data.name }}
-                            </option>
-                        </select>
-                     
-                    </div>
-                </w-flex>
-                <w-flex class="grow mx1" justify-center>
-                    <div class="form-group">
-                        <w-input v-model="node0" required class="mb3" label="Subject" color="info" outline>
-                        </w-input>
-                    </div>
-                    <div class="form-group">
-                        <w-input v-model="node1" required class="mb3" label="Property" color="info" outline>
-                        </w-input>
-                    </div>
-                    <div class="form-group">
-                        <w-input v-model="node2" required class="mb3" label="Object/Value" color="info" outline>
-                        </w-input>
-                    </div>
-                </w-flex>
-                <div class="form-group">
-                    <w-textarea v-model="comment" required class="mt4" outline color="blue">
-                        Add Comments
+            <w-form @submit.prevent="addTriplesdatabase">
+                    <w-textarea  no-autogrow  v-model="addTriples" class="triples" outline color="blue">
+                        Add Triples in CSV format
                     </w-textarea>
-                </div>
+                    <w-tag class="mr4" color="primary">For example - Arun Speaks English-French-Malayalam,Arun Likes Cricket-Football-Hockey</w-tag>
+                
+                <div class="spacer" />
+                <div class="spacer" />
                 <div class="spacer" />
 
                 <w-flex justify-center>
                     <w-button class="ma1 grow" xl @click="dialog.show = false">Close</w-button>
-                     <w-button xl class="ma1 grow" bg-color="warning" type="reset">
+                    <w-button xl class="ma1 grow" bg-color="warning" type="reset">
                         Reset
                     </w-button>
                     <w-button xl type="submit" class="ma1 grow" bg-color="primary" :loading="button1loading" @click="buttonDoLoading(1)">
                         <w-icon class="mr1">wi-check</w-icon>
                         Save
                     </w-button>
-                   
                 </w-flex>
             </w-form>
         </w-dialog>
         <!-- Edit Modal HTML -->
-        <w-dialog v-model="dialog1.show" :fullscreen="dialog1.fullscreen" :width="dialog.width" :persistent="dialog1.persistent" :persistent-no-animation="dialog1.persistentNoAnimation" title-class="primary-light1--bg white">
+        <w-dialog v-model="dialog1.show" :fullscreen="dialog1.fullscreen" :width="dialog.width" persistent title-class="primary-light1--bg white">
             <template bg-color="info-dark3" #title>
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
                 Edit Selected RDF Triple
@@ -201,6 +178,7 @@
                         </w-input>
                     </div>
                 </w-flex>
+
                 <div class="form-group">
                     <w-textarea v-model="editComment" class="mt4" outline color="blue">
                         Comments
@@ -217,7 +195,6 @@
                         <w-icon class="mr1">wi-check</w-icon>
                         Save
                     </w-button>
-                    
                 </w-flex>
             </w-form>
         </w-dialog>
@@ -241,11 +218,11 @@
 
 <script>
 import axios from "axios";
-import TextReader from './TextReader.vue'
+import TextReader from "./TextReader.vue";
 export default {
     name: "TableComponent",
     components: {
-        TextReader
+        TextReader,
     },
 
     data: () => ({
@@ -269,7 +246,7 @@ export default {
             fullscreen: false,
             persistent: false,
             persistentNoAnimation: false,
-            width: 400
+            width: 400,
         },
         button1loading: false,
         button2loading: false,
@@ -291,7 +268,9 @@ export default {
             {
                 label: "Item 3",
             },
+
         ],
+        addTriples: null,
     }),
     created() {
         this.pageNumber1();
@@ -302,31 +281,48 @@ export default {
             setTimeout(() => (this[`button${id}loading`] = false), 3000);
         },
         async fileReader() {
-            console.log(this.text1)
-            const lines = this.text1.split('\n') // 1️⃣
-            const header = lines[0].split(',') // 2️⃣
-            const output = lines.slice(1).map(line => {
-                const fields = line.split(',') // 3️⃣
-                return Object.fromEntries(header.map((h, i) => [h, fields[i]])) // 4️⃣
-            })
-            console.log(output)
+            console.log(this.text1);
+            const lines = this.text1.split("\n"); // 1️⃣
+            const header = lines[0].split(","); // 2️⃣
+            const output = lines.slice(1).map((line) => {
+                const fields = line.split(","); // 3️⃣
+                return Object.fromEntries(header.map((h, i) => [h, fields[i]])); // 4️⃣
+            });
+            console.log(output);
             for (let t of output) {
-                console.log(t)
-                await axios.post("http://localhost:4000/createfile", {
-                    fileName: this.$store.state.fileName,
-                    num: null,
-                    node0: t.node0,
-                    node1: t.node1,
-                    node2: t.node2,
-                    comment: t.comment,
-                    propertyName: null,
-                    userName: this.$store.state.currentUserData.firstName,
-                    userLastName: this.$store.state.currentUserData.lastName,
-                    dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
-                }).then((response) => {
-                    console.log(response)
-                });
+                console.log(t);
+                await axios
+                    .post("http://localhost:4000/createfile", {
+                        fileName: this.$store.state.fileName,
+                        num: null,
+                        node0: t.node0,
+                        node1: t.node1,
+                        node2: t.node2,
+                        comment: t.comment,
+                        propertyName: null,
+                        userName: this.$store.state.currentUserData.firstName,
+                        userLastName: this.$store.state.currentUserData.lastName,
+                        dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    });
             }
+        },
+        addTriplesdatabase() {
+            console.log(this.addTriples)
+            let arr = this.addTriples.split("\n")
+            let triples = []
+            for (let i of arr) {
+                let triple = i.split(" ")
+                let tri = triple[2].split(",")
+                for (let j of tri){
+                    let value = [triple[0],triple[1],j]
+                    triples.push(value)
+                }              
+            }
+            console.log(triples)
+
         },
         test(data) {
             this.$store.state.editRDF.editid = data._id;
@@ -544,6 +540,15 @@ body {
     font-size: 15px;
 }
 
+.triples {
+    top: -23px;
+    height: 200px
+}
+
+.comment {
+    top: -20px
+}
+
 .test123 {
     position: absolute;
     left: 500px;
@@ -552,13 +557,35 @@ body {
     font-weight: normal;
     font-size: 15px;
 }
-.uploadProper{
-     position: absolute;
-    left: 280px;
-      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+.discussion {
+    position: absolute;
+    left: 170px;
+    top: 1.2px;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 15px;  
+    font-size: 15px;
+}
+
+.uploadProper {
+    position: absolute;
+    left: 280px;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+}
+
+.invitation {
+    position: absolute;
+    left: 53px;
+    top: 1.1px;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+
 }
 
 .test1 {

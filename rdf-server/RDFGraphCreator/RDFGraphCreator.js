@@ -1,9 +1,9 @@
 function RDFGraphGenerator(node0, node1, node2,propertyName,comment) {
     
     let string1 = "qa:node1  rdfs:label \""
-    let string2 = `qa:${propertyName} skos:altLabel \"`
+    let string2 = `qa:${node1} rdfs:label \"`
     let string3 = "qa:node2 rdfs:label \""
-    let string4 = "qa:node1 qa:language qa:node2 . \n"
+    let string4 = `qa:node1 qa:${node1} qa:node2 . \n`
 
     let rdfGraph1 = string1.concat(node0);
     let rdfGraph2 = string2.concat(node1);
