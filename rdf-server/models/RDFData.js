@@ -26,6 +26,12 @@ let RDFSchema = new rSchema({
   userName: {
     type: String
   },
+  approve: {
+    type: Boolean
+  },
+  likes:{
+    type:String
+  },
 }, {
   collection: 'RDFData'
 })

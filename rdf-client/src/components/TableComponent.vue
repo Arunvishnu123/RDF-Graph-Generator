@@ -13,10 +13,10 @@
                             </div>
                             <div class="col-sm-6">
                                 <w-flex>
-                                    <w-button bg-color="info-dark2" class="invitation px2" @click="dialog.show = true">
+                                    <w-button bg-color="info-dark2" class="invitation px2" @click="dialog4.show = true">
                                         Invite Peoples
                                     </w-button>
-                                    <w-button bg-color="info-dark2" class="discussion px2" @click="dialog.show = true">
+                                    <w-button bg-color="info-dark2" class="discussion px2" @click="dialog3.show = true">
                                         Discussion Form
                                     </w-button>
                                     <w-button bg-color="info-dark2" class="test px2" @click="dialog.show = true">
@@ -52,7 +52,7 @@
                                 <td>Arun</td>
                                 <td>{{ data.comment }}</td>
                                 <td>
-                                    <w-switch class="ma2" :model-value="false" color="success">
+                                    <w-switch v-model="approved" class="ma2" :model-value="false" color="success">
                                     </w-switch>
                                 </td>
 
@@ -80,7 +80,8 @@
                                             Delete
                                         </w-confirm>
 
-                                        <w-button color="success" icon="fa fa-check"> </w-button>
+                                        <w-button @click="approve()" color="success" icon="fa fa-check">
+                                        </w-button>
                                     </w-flex>
                                 </td>
                             </tr>
@@ -124,11 +125,13 @@
                 </w-button>
             </template>
             <w-form @submit.prevent="addTriplesdatabase">
-                    <w-textarea  no-autogrow  v-model="addTriples" class="triples" outline color="blue">
-                        Add Triples in CSV format
-                    </w-textarea>
-                    <w-tag class="mr4" color="primary">For example - Arun Speaks English-French-Malayalam,Arun Likes Cricket-Football-Hockey</w-tag>
-                
+                <w-textarea no-autogrow v-model="addTriples" class="triples" outline color="blue">
+                    Add Triples in CSV format
+                </w-textarea>
+                <w-flex>
+                    <w-tag class="mr4" height="3em" color="primary">For example - Arun Speaks English-French-Malayalam,Arun Likes
+                        Cricket-Football-Hockey</w-tag>
+                </w-flex>
                 <div class="spacer" />
                 <div class="spacer" />
                 <div class="spacer" />
@@ -152,18 +155,6 @@
                 Edit Selected RDF Triple
             </template>
             <w-form @submit.prevent="editFile">
-                <w-flex class="grow mx1">
-                    <div class="form-group">
-                        <w-tag class="ma1" bg-color="primary" color="white" xl>
-                            Select the Property type</w-tag>
-                        <select class="selector" v-model="editPropertyName">
-                            <option value="test">--Please select a Property Name--</option>
-                            <option v-for="data in $store.state.properties" :key="data.id" :value="data.name">
-                                {{ data.name }}
-                            </option>
-                        </select>
-                    </div>
-                </w-flex>
                 <w-flex justify-center>
                     <div class="form-group">
                         <w-input v-model="editnode0" class="mb3" label="Subject" color="info" outline>
@@ -198,7 +189,7 @@
                 </w-flex>
             </w-form>
         </w-dialog>
-        <!-- Delete Modal HTML -->
+        <!-- Upload Modal HTML -->
         <w-dialog v-model="dialog2.show" :fullscreen="dialog2.fullscreen" :width="dialog2.width" :persistent="dialog2.persistent" :persistent-no-animation="dialog2.persistentNoAnimation" title-class="primary-light1--bg white">
             <template bg-color="info-dark2" #title>
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
@@ -210,6 +201,37 @@
             <w-flex>
                 <w-button class="grow" bg-color="info-dark2" color="white" @click="dialog2.show = false">Close</w-button>
                 <w-button class="grow" @click="fileReader()" bg-color="info-dark2" color="white">Save</w-button>
+            </w-flex>
+        </w-dialog>
+
+        <!-- Discussion forum Modal HTML -->
+        <w-dialog v-model="dialog3.show" fullscreen :width="dialog3.width" title-class="primary-light1--bg white">
+            <template bg-color="info-dark2" #title>
+                <w-icon class="mr2">mdi mdi-tune</w-icon>
+                Disucssion Forum
+            </template>
+            <w-flex>
+                <w-button class="closebutton grow" bg-color="info-dark2" sm outline round absolute icon="wi-cross" color="white" @click="dialog3.show = false">Close</w-button>
+            </w-flex>
+        </w-dialog>
+
+        <!-- invitation forum Modal HTML -->
+        <w-dialog v-model="dialog4.show" :width="dialog4.width" title-class="primary-light1--bg white">
+            <template bg-color="info-dark2" #title>
+                <w-icon class="mr2">mdi mdi-tune</w-icon>
+                Send Invitation
+            </template>
+            <w-flex>
+                <w-button class="closebutton grow" bg-color="info-dark2" sm outline round absolute icon="wi-cross" color="white" @click="dialog4.show = false">Close</w-button>
+            </w-flex>
+            <w-input class="firstName" required label="First Name"> </w-input>
+            <w-input class="email1" required label="Email"> </w-input>
+            <w-input class="message1" required label="Enter the Message"> </w-input>
+            <w-flex>
+                <w-button class="invitationbutton grow" @click="$waveui.notify('Success!', 'success')" color="white" bg-color="info-dark2">
+                    <w-icon class="mr1">wi-check</w-icon>
+                    Send Invitation Request
+                </w-button>
             </w-flex>
         </w-dialog>
     </w-app>
@@ -248,6 +270,20 @@ export default {
             persistentNoAnimation: false,
             width: 400,
         },
+        dialog3: {
+            show: false,
+            fullscreen: false,
+            persistent: false,
+            persistentNoAnimation: false,
+            width: 400,
+        },
+        dialog4: {
+            show: false,
+            fullscreen: false,
+            persistent: false,
+            persistentNoAnimation: false,
+            width: 400,
+        },
         button1loading: false,
         button2loading: false,
         rdfgraph: null,
@@ -258,6 +294,7 @@ export default {
         isActive5: false,
         text: null,
         text1: null,
+        approved: null,
         showBadge: 0,
         items: [{
                 label: "Item 1",
@@ -268,7 +305,6 @@ export default {
             {
                 label: "Item 3",
             },
-
         ],
         addTriples: null,
     }),
@@ -309,20 +345,37 @@ export default {
                     });
             }
         },
-        addTriplesdatabase() {
-            console.log(this.addTriples)
-            let arr = this.addTriples.split("\n")
-            let triples = []
+        async addTriplesdatabase() {
+            console.log(this.addTriples);
+            let arr = this.addTriples.split("\n");
+            let triples = [];
             for (let i of arr) {
-                let triple = i.split(" ")
-                let tri = triple[2].split(",")
-                for (let j of tri){
-                    let value = [triple[0],triple[1],j]
-                    triples.push(value)
-                }              
+                let triple = i.split(" ");
+                let tri = triple[2].split(",");
+                for (let j of tri) {
+                    let value = [triple[0], triple[1], j, triple[3]];
+                    triples.push(value);
+                }
             }
-            console.log(triples)
-
+            console.log(triples);
+            for (let tri of triples) {
+                await axios
+                    .post("http://localhost:4000/createfile", {
+                        fileName: this.$store.state.fileName,
+                        num: null,
+                        node0: tri[0],
+                        node1: tri[1],
+                        node2: tri[2],
+                        comment: tri[3],
+                        propertyName: null,
+                        userName: this.$store.state.currentUserData.firstName,
+                        userLastName: this.$store.state.currentUserData.lastName,
+                        dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    });
+            }
         },
         test(data) {
             this.$store.state.editRDF.editid = data._id;
@@ -350,6 +403,11 @@ export default {
             this.isActive4 = false;
             this.isActive2 = false;
             this.isActive5 = false;
+        },
+        approve() {
+            if (this.approved == true) {
+                console.log("Approved");
+            }
         },
 
         editRDFData(data) {
@@ -526,6 +584,10 @@ body {
     top: -1000px;
 }
 
+.closebutton {
+    top: 10px;
+}
+
 .wrapper {
     padding: 1px;
 }
@@ -542,11 +604,11 @@ body {
 
 .triples {
     top: -23px;
-    height: 200px
+    height: 200px;
 }
 
 .comment {
-    top: -20px
+    top: -20px;
 }
 
 .test123 {
@@ -585,7 +647,6 @@ body {
     font-style: normal;
     font-weight: normal;
     font-size: 15px;
-
 }
 
 .test1 {
@@ -600,6 +661,10 @@ body {
 
 .table-responsive {
     margin: 30px 0;
+}
+
+.invitationbutton {
+    padding: 10px;
 }
 
 .table-wrapper {
@@ -645,6 +710,30 @@ body {
     float: left;
     font-size: 21px;
     margin-right: 5px;
+}
+
+.firstName {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 13px;
+}
+
+.email1 {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 13px;
+}
+
+.message1 {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 20px;
 }
 
 .table-title .btn span {
