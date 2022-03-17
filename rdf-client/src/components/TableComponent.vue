@@ -213,16 +213,19 @@
             <w-flex>
                 <w-button class="closebutton grow" bg-color="info-dark2" sm outline round absolute icon="wi-cross" color="white" @click="dialog3.show = false">Close</w-button>
             </w-flex>
-            <pre class="chatmess">
-            Arun:Hi please do the edit 
-            </pre>
-            <w-flex class="mes">
-                <w-textarea label="Message" label-position="inside" outline inner-icon-left="mdi mdi-email">
+             <w-flex class="mes">
+                <w-textarea v-model="discussionMessage" label="Message" label-position="inside" outline inner-icon-left="mdi mdi-email">
                 </w-textarea>
             </w-flex>
             <w-flex>
-                <w-button class="sendbutton grow" bg-color="info-dark2" color="white">Send</w-button>
+                <w-button @click="sendMessage()" class="sendbutton grow" bg-color="info-dark2" color="white">Send</w-button>
             </w-flex>
+            <div class="chat">
+            <pre class="chatmess">
+           {{ chatmessage }}
+            </pre>
+            </div>
+           
 
         </w-dialog>
 
@@ -274,6 +277,7 @@ export default {
             persistentNoAnimation: false,
             width: 500,
         },
+        chatmessage:null,
         dialog2: {
             show: false,
             fullscreen: false,
@@ -303,6 +307,7 @@ export default {
         isActive3: false,
         isActive4: false,
         isActive5: false,
+        discussionMessage:null,
         text: null,
         text1: null,
         approved: null,
@@ -388,6 +393,16 @@ export default {
                     });
             }
         },
+
+       async sendMessage(){
+           await axios.post("http://localhost:4000/message",{
+               user:this.$store.state.currentUserData.firstName,
+               message:this.discussionMessage
+           }).then((response) =>{
+               console.log(response)
+               this.chatmessage = response.data
+           })
+        },
         test(data) {
             this.$store.state.editRDF.editid = data._id;
             this.$store.dispatch("deleteRDFData");
@@ -420,6 +435,7 @@ export default {
                 console.log("Approved");
             }
         },
+
 
         editRDFData(data) {
             this.dialog1.show = true;
@@ -801,6 +817,9 @@ table.table td a:hover {
 
 table.table td a.edit {
     color: #ffc107;
+}
+.chat{
+     max-height: 600px;
 }
 
 table.table td a.delete {
