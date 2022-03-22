@@ -364,7 +364,8 @@ export default {
         },
         async addTriplesdatabase() {
             console.log(this.addTriples);
-            let arr = this.addTriples.split("\n");
+            let arr = this.addTriples.split("-");
+            console.log("test",arr)
             let triples = [];
             for (let i of arr) {
                 let triple = i.split(" ");

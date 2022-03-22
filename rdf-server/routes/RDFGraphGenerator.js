@@ -13,10 +13,12 @@ RDFGraphRoute.route('/RDFGraph/:fileName').get((req, res, next) => {
         } else {
             let t = rdfintro.RDFGraphGeneratorf()
             let g = ""
-            for (let data of datas) {
-                let convertedrdfgraph = rdfconvert.RDFGraphGenerator(data.node0, data.node1, data.node2, data.propertyName,data.comment)
+            let test = 1
+            for (let data of datas) {  
+                let convertedrdfgraph = rdfconvert.RDFGraphGenerator(data.node0, data.node1, data.node2, data.propertyName,data.comment,test,test+1)
                 console.log(convertedrdfgraph)
                 g = g + convertedrdfgraph
+                test = test + 2
             }
             let final = t + g
             res.json(final)
