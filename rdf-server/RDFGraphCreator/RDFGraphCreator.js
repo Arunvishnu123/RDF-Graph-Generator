@@ -2,7 +2,7 @@ function RDFGraphGenerator(node0, node1, node2,propertyName,comment,node1num,nod
     
     let string1 = `qa:node${node1num}  rdfs:label \"`
     let string2 = `qa:${node1} rdfs:label \"`
-    let string3 = `qa:${node2num} rdfs:label \"`
+    let string3 = `qa:node${node2num} rdfs:label \"`
     let string4 = `qa:node${node1num} qa:${node1} qa:node${node2num} . \n`
 
     let rdfGraph1 = string1.concat(node0);

@@ -235,6 +235,7 @@ export default createStore({
         propertyName: this.state.propertyName,
         userName: this.state.currentUserData.firstName,
         userLastName: this.state.currentUserData.lastName,
+        approve:false,
         dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
       }).then((response) => {
         console.log(response)

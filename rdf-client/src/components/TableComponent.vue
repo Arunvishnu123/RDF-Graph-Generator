@@ -52,19 +52,21 @@
                                 <td>Arun</td>
                                 <td>{{ data.comment }}</td>
                                 <td>
-                                    <w-switch v-model="approved" class="ma2" :model-value="false" color="success">
+                                    <w-switch disabled v-model="data.approve" class="ma2" color="success">
                                     </w-switch>
+                                    <w-button @click="approve(data)" color="success" icon="fa fa-check">
+                                    </w-button>
                                 </td>
 
                                 <td>
                                     <w-flex align-center>
-                                        <w-badge class="mx6" v-model="showBadge" bg-color="error" overlap>
+                                        <w-badge class="mx6" v-model="data.likes" bg-color="error" overlap>
                                             <w-icon class="mr1" xl color="primary">
                                                 mdi mdi-thumb-up
                                             </w-icon>
                                         </w-badge>
 
-                                        <w-button v-on="on4" v-if="$store.state.currentUserData.firstName != name" @click="showBadge++" icon="wi-plus" bg-color="success" sm>
+                                        <w-button v-on="on4" @click="addLikes(data)" icon="wi-plus" bg-color="success" sm>
                                         </w-button>
                                     </w-flex>
                                 </td>
@@ -80,8 +82,6 @@
                                             Delete
                                         </w-confirm>
 
-                                        <w-button @click="approve()" color="success" icon="fa fa-check">
-                                        </w-button>
                                     </w-flex>
                                 </td>
                             </tr>
@@ -190,7 +190,7 @@
             </w-form>
         </w-dialog>
         <!-- Upload Modal HTML -->
-        <w-dialog v-model="dialog2.show" :fullscreen="dialog2.fullscreen" :width="dialog2.width" :persistent="dialog2.persistent" :persistent-no-animation="dialog2.persistentNoAnimation" title-class="primary-light1--bg white">
+        <w-dialog v-model="dialog2.show" :loading="button4loading" @click="buttonDoLoading(4)" :fullscreen="dialog2.fullscreen" :width="dialog2.width" :persistent="dialog2.persistent" :persistent-no-animation="dialog2.persistentNoAnimation" title-class="primary-light1--bg white">
             <template bg-color="info-dark2" #title>
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
                 Upload Triples via CSV Format
@@ -210,11 +210,11 @@
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
                 Disucssion Forum
             </template>
-            
+
             <w-flex>
                 <w-button class="closebutton grow" bg-color="info-dark2" sm outline round absolute icon="wi-cross" color="white" @click="dialog3.show = false">Close</w-button>
             </w-flex>
-             <w-flex class="mes">
+            <w-flex class="mes">
                 <w-textarea v-model="discussionMessage" label="Message" label-position="inside" outline inner-icon-left="mdi mdi-email">
                 </w-textarea>
             </w-flex>
@@ -222,11 +222,10 @@
                 <w-button @click="sendMessage()" class="sendbutton grow" bg-color="info-dark2" color="white">Send</w-button>
             </w-flex>
             <div class="chat">
-            <pre class="chatmess">
-           {{ chatmessage }}
-            </pre>
+                <pre class="chatmess">
+                {{ chatmessage }}
+                </pre>
             </div>
-           
 
         </w-dialog>
 
@@ -278,7 +277,7 @@ export default {
             persistentNoAnimation: false,
             width: 500,
         },
-        chatmessage:null,
+        chatmessage: null,
         dialog2: {
             show: false,
             fullscreen: false,
@@ -302,13 +301,14 @@ export default {
         },
         button1loading: false,
         button2loading: false,
+        button4loading: false,
         rdfgraph: null,
         isActive1: false,
         isActive2: false,
         isActive3: false,
         isActive4: false,
         isActive5: false,
-        discussionMessage:null,
+        discussionMessage: null,
         text: null,
         text1: null,
         approved: null,
@@ -351,8 +351,10 @@ export default {
                         node0: t.node0,
                         node1: t.node1,
                         node2: t.node2,
+                        approve: false,
                         comment: t.comment,
                         propertyName: null,
+                        likes: 0,
                         userName: this.$store.state.currentUserData.firstName,
                         userLastName: this.$store.state.currentUserData.lastName,
                         dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
@@ -365,7 +367,7 @@ export default {
         async addTriplesdatabase() {
             console.log(this.addTriples);
             let arr = this.addTriples.split("-");
-            console.log("test",arr)
+            console.log("test", arr)
             let triples = [];
             for (let i of arr) {
                 let triple = i.split(" ");
@@ -386,6 +388,8 @@ export default {
                         node2: tri[2],
                         comment: tri[3],
                         propertyName: null,
+                        approve: false,
+                        likes: 0,
                         userName: this.$store.state.currentUserData.firstName,
                         userLastName: this.$store.state.currentUserData.lastName,
                         dateandtime: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
@@ -395,15 +399,25 @@ export default {
                     });
             }
         },
+        addLikes(data) {
+            await axios
+                .put("http://localhost:4000/approve/" + data._id, {
+                    approve: true,
 
-       async sendMessage(){
-           await axios.post("http://localhost:4000/message",{
-               user:this.$store.state.currentUserData.firstName,
-               message:this.discussionMessage
-           }).then((response) =>{
-               console.log(response)
-               this.chatmessage = response.data
-           })
+                })
+                .then((response) => {
+                    console.log(response);
+                });
+        },
+
+        async sendMessage() {
+            await axios.post("http://localhost:4000/message", {
+                user: this.$store.state.currentUserData.firstName,
+                message: this.discussionMessage
+            }).then((response) => {
+                console.log(response)
+                this.chatmessage = response.data
+            })
         },
         test(data) {
             this.$store.state.editRDF.editid = data._id;
@@ -432,12 +446,27 @@ export default {
             this.isActive2 = false;
             this.isActive5 = false;
         },
-        approve() {
-            if (this.approved == true) {
-                console.log("Approved");
-            }
-        },
 
+        async approve(data) {
+            console.log("data", data._id)
+            if (this.approval == null) {
+                this.approved = false
+            }
+
+            if (this.approved == false) {
+                this.approved = true
+                await axios
+                    .put("http://localhost:4000/approve/" + data._id, {
+                        approve: true,
+
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    });
+
+            }
+
+        },
 
         editRDFData(data) {
             this.dialog1.show = true;
@@ -820,8 +849,9 @@ table.table td a:hover {
 table.table td a.edit {
     color: #ffc107;
 }
-.chat{
-     max-height: 600px;
+
+.chat {
+    max-height: 600px;
 }
 
 table.table td a.delete {
@@ -992,9 +1022,11 @@ table.table .avatar {
     border-radius: 2px;
     min-width: 100px;
 }
-.chatmess{
-    left:0px;
+
+.chatmess {
+    left: 0px;
 }
+
 .modal form label {
     font-weight: normal;
 }
