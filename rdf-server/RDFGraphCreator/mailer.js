@@ -6,13 +6,13 @@ function email ( reciverEmail,message){
       service: 'gmail',
       auth: {
         user: 'arunvishnu40@gmail.com',
-        pass: 'password',
+        pass: 'arunpeyad',
       },
     });
     
     var mailOptions = {
       from: 'arunvishnu40@gmail.com',
-      to: 'arunvishnu40@gmail.com',
+      to: "arunvishnu40@gmail.com",
       subject: 'Sending Email using Node.js',
       text: 'That was easy!'
     };
@@ -26,3 +26,4 @@ function email ( reciverEmail,message){
     });
 }
 
+exports.email = email;

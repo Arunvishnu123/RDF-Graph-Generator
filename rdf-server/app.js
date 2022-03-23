@@ -24,6 +24,7 @@ const rdfAPI = require('../rdf-server/routes/RDFData')
 const graphAPI = require('../rdf-server/routes/RDFGraphGenerator')
 const fileAPI = require('../rdf-server/routes/FileName')
 const messageAPI = require('../rdf-server/routes/Discussion')
+const emailAPI  = require('../rdf-server/routes/Email')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -39,6 +40,7 @@ app.use('/', rdfAPI)
 app.use('/', graphAPI)
 app.use('/', fileAPI)
 app.use('/', messageAPI)
+app.use('/',emailAPI)
 
 // Create port
 const port = process.env.PORT || 4000;

@@ -36,9 +36,8 @@
             {{$store.state.generatedRDFGraph }}
             </pre>
         </div>
-
         <w-flex>
-            <w-button class="download grow" color="white" bg-color="info-dark2">Press to Download the Generated RDF Graph</w-button>
+            <w-button @click="download()" class="download grow" color="white" bg-color="info-dark2">Press to Download the Generated RDF Graph</w-button>
         </w-flex>
     </div>
 </w-app>
@@ -55,6 +54,12 @@ export default {
     }),
     components: {
         Avatar,
+    },
+    methods:{
+        download(){
+        console.log("Downlaoded")
+      
+        }
     },
 
     computed: {

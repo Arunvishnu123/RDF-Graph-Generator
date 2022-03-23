@@ -238,15 +238,17 @@
             <w-flex>
                 <w-button class="closebutton grow" bg-color="info-dark2" sm outline round absolute icon="wi-cross" color="white" @click="dialog4.show = false">Close</w-button>
             </w-flex>
-            <w-input class="firstName" required label="First Name"> </w-input>
-            <w-input class="email1" required label="Email"> </w-input>
-            <w-input class="message1" required label="Enter the Message"> </w-input>
-            <w-flex>
-                <w-button class="invitationbutton grow" @click="$waveui.notify('Success!', 'success')" color="white" bg-color="info-dark2">
-                    <w-icon class="mr1">wi-check</w-icon>
-                    Send Invitation Request
-                </w-button>
-            </w-flex>
+            <w-form  @submit.prevent="sendMail">
+                <w-input v-model="firstName" class="firstName" required label="First Name"> </w-input>
+                <w-input v-model="email" class="email1" required label="Email"> </w-input>
+                <w-input v-model="emailmessage" class="message1" required label="Enter the Message"> </w-input>
+                <w-flex>
+                    <w-button type="submit" class="invitationbutton grow" @click="$waveui.notify('Success!', 'success')" color="white" bg-color="info-dark2">
+                        <w-icon class="mr1">wi-check</w-icon>
+                        Send Invitation Request
+                    </w-button>
+                </w-flex>
+            </w-form>
         </w-dialog>
     </w-app>
 </div>
@@ -269,6 +271,9 @@ export default {
             persistentNoAnimation: false,
             width: 700,
         },
+        firstName: null,
+        email: null,
+        emailmessage: null,
         name: "Arun",
         dialog1: {
             show: false,
@@ -364,6 +369,16 @@ export default {
                     });
             }
         },
+
+        async sendMail() {
+            await axios.post("http://localhost:4000/sendemail", {
+                name: this.firstName,
+                email: this.email,
+                emailMessage: this.emailmessage
+            }).then((response) => {
+                console.log(response)
+            })
+        },
         async addTriplesdatabase() {
             console.log(this.addTriples);
             let arr = this.addTriples.split("-");
@@ -410,7 +425,7 @@ export default {
                 .then((response) => {
                     console.log(response);
                 });
-                this.refresh();
+            this.refresh();
         },
 
         async sendMessage() {
