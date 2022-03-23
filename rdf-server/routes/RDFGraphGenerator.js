@@ -59,6 +59,16 @@ RDFGraphRoute.route('/approve/:_id').put((req, res, next) => {
     }
   })
 })
+RDFGraphRoute.route('/likes/:_id').put((req, res, next) => {
+  RDFModel.findByIdAndUpdate(req.params._id, { $set: req.body }, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data)
+      console.log("Datasuccesfully updated")
+    }
+  })
+})
 
 
 module.exports = RDFGraphRoute;

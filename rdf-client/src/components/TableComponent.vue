@@ -399,15 +399,18 @@ export default {
                     });
             }
         },
-        addLikes(data) {
+        async addLikes(data) {
+            let like = 0
+            like = like + 1
+            console.log(like)
             await axios
-                .put("http://localhost:4000/approve/" + data._id, {
-                    approve: true,
-
+                .put("http://localhost:4000/likes/" + data._id, {
+                    likes: like,
                 })
                 .then((response) => {
                     console.log(response);
                 });
+                this.refresh();
         },
 
         async sendMessage() {
@@ -465,7 +468,7 @@ export default {
                     });
 
             }
-
+            this.refresh();
         },
 
         editRDFData(data) {

@@ -30,7 +30,7 @@ let RDFSchema = new rSchema({
     type: Boolean
   },
   likes:{
-    type:String
+    type:Number
   },
 }, {
   collection: 'RDFData'
