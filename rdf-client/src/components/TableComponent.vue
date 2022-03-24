@@ -389,13 +389,17 @@ export default {
         },
         async addTriplesdatabase() {
             console.log(this.addTriples);
-            let arr = this.addTriples.split("-");
+            let arr = this.addTriples.split("\n");
             console.log("test", arr)
             let triples = [];
             for (let i of arr) {
                 let triple = i.split(" ");
+                console.log("Triples", triple)
+
                 let tri = triple[2].split(",");
+                console.log("Triples", tri)
                 for (let j of tri) {
+                    console.log("j", j)
                     let value = [triple[0], triple[1], j, triple[3]];
                     triples.push(value);
                 }
@@ -423,9 +427,23 @@ export default {
             }
         },
         async addLikes(data) {
-            let like = 0
-            like = like + 1
-            console.log(like)
+            let like = 0 
+            if (this.$store.state.currentUserData.firstName == "Arun") {
+                
+                like = like + 1
+                console.log(like)
+            }
+            if (this.$store.state.currentUserData.firstName == "Shiva") {
+               
+                like = like + 1
+                console.log(like)
+            }
+            if (this.$store.state.currentUserData.firstName == "Nurien") {
+    
+                like = like + 1
+                console.log(like)
+            }
+
             await axios
                 .put("http://localhost:4000/likes/" + data._id, {
                     likes: like,
@@ -911,9 +929,11 @@ table.table .avatar {
     text-align: center;
     padding: 0 6px;
 }
-.head{
-    padding:10px
+
+.head {
+    padding: 10px
 }
+
 .pagination li a:hover {
     color: #666;
 }

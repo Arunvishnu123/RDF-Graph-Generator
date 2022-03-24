@@ -12,9 +12,9 @@ function email ( reciverEmail,message){
     
     var mailOptions = {
       from: 'arunvishnu40@gmail.com',
-      to: "arunvishnu40@gmail.com",
-      subject: 'Sending Email using Node.js',
-      text: 'That was easy!'
+      to: reciverEmail,
+      subject: 'RDFCollaborative RDF Graph Generator',
+      text: message + "\n" + " http://192.168.146.202:8084/"
     };
     
     transporter.sendMail(mailOptions, function(error, info){
