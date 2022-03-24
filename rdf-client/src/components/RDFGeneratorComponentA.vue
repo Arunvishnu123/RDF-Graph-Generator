@@ -1,15 +1,8 @@
 <template>
 <div>
     <w-app>
-        <div>
-          
-
-        </div>
-        <div>
-          
-
-         
-        </div>
+        <div></div>
+        <div></div>
     </w-app>
 </div>
 </template>
@@ -36,7 +29,6 @@ export default {
         validators: {
             required: (value) => !!value || "This field is required",
         },
-        
     }),
     methods: {
         createNewFile() {
@@ -53,13 +45,11 @@ export default {
         },
 
         submitSelectedFileName() {
-            
-            console.log("djfjjdsfjksdhfjhdf", this.getSelectedFile)
-            this.$store.dispatch("getfiledata")
-            console.log("dbfjsdbfjsdbfhdb")
-            this.dialog1.show = false
-
-        }
+            console.log("djfjjdsfjksdhfjhdf", this.getSelectedFile);
+            this.$store.dispatch("getfiledata");
+            console.log("dbfjsdbfjsdbfhdb");
+            this.dialog1.show = false;
+        },
     },
 
     computed: {
@@ -82,7 +72,7 @@ export default {
         //    },
         //},
         // },
-    }
+    },
 };
 </script>
 

@@ -126,7 +126,7 @@
             </template>
             <w-form @submit.prevent="addTriplesdatabase">
                 <w-textarea no-autogrow v-model="addTriples" class="triples" outline color="blue">
-                    Add Triples in CSV format
+                    Add Triples
                 </w-textarea>
                 <w-flex>
                     <w-tag class="mr4" height="3em" color="primary">For example - Arun Speaks English-French-Malayalam,Arun Likes
@@ -195,6 +195,14 @@
                 <w-icon class="mr2">mdi mdi-tune</w-icon>
                 Upload Triples via CSV Format
             </template>
+            <w-tag class="head mr4" height="3em" color="primary">Upload Multiple triple in CSV Format for examples- "Subject,Predicate,Object/Value,Comment,r"</w-tag>
+            <div class="spacer" />
+            <div class="spacer" />
+            <div class="spacer" />
+            <div class="spacer" />
+            <div class="spacer" />
+            <div class="spacer" />
+
             <w-flex>
                 <text-reader class="grow" @load="text1 = $event"></text-reader>
             </w-flex>
@@ -238,7 +246,7 @@
             <w-flex>
                 <w-button class="closebutton grow" bg-color="info-dark2" sm outline round absolute icon="wi-cross" color="white" @click="dialog4.show = false">Close</w-button>
             </w-flex>
-            <w-form  @submit.prevent="sendMail">
+            <w-form @submit.prevent="sendMail">
                 <w-input v-model="firstName" class="firstName" required label="First Name"> </w-input>
                 <w-input v-model="email" class="email1" required label="Email"> </w-input>
                 <w-input v-model="emailmessage" class="message1" required label="Enter the Message"> </w-input>
@@ -903,7 +911,9 @@ table.table .avatar {
     text-align: center;
     padding: 0 6px;
 }
-
+.head{
+    padding:10px
+}
 .pagination li a:hover {
     color: #666;
 }

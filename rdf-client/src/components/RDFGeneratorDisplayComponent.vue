@@ -12,11 +12,11 @@
         <w-drawer v-model="openDrawer" :[position]="true">
             <w-button @click="openDrawer = false" sm outline round absolute icon="wi-cross">
             </w-button>
-           
+
             <br />
             <w-flex>
-                <Avatar class="avatar" :avatar="text1"/>
-                <h4 class="username">Arun Raveendran Nair Sheela </h4>
+                <Avatar class="avatar" :avatar="text1" />
+                <h4 class="username">Arun Raveendran Nair Sheela</h4>
                 <w-button class="home grow" color="white" bg-color="info-dark2">Home
                 </w-button>
             </w-flex>
@@ -33,7 +33,7 @@
 
         <div class="test">
             <pre class="j">
-            {{$store.state.generatedRDFGraph }}
+            {{ $store.state.generatedRDFGraph }}
             </pre>
         </div>
         <w-flex>
@@ -55,11 +55,10 @@ export default {
     components: {
         Avatar,
     },
-    methods:{
-        download(){
-        console.log("Downlaoded")
-      
-        }
+    methods: {
+        download() {
+            console.log("Downlaoded");
+        },
     },
 
     computed: {
@@ -80,7 +79,6 @@ export default {
     height: 120px;
     padding-top: 1px;
 }
-
 
 .download {
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -127,10 +125,12 @@ pre .line::before {
     left: 0x;
     top: 200px;
 }
-.test{
-     max-height: 600px;
-    overflow:scroll;
+
+.test {
+    max-height: 600px;
+    overflow: scroll;
 }
+
 .about {
     position: absolute;
     width: 400px;
@@ -160,13 +160,13 @@ h4 {
 .avatar {
     position: absolute;
     height: 100px;
-    top:30px;
-    left:150px
+    top: 30px;
+    left: 150px;
 }
-.username{
 
-    position:absolute;
-    top:120px;
-    left:30px
+.username {
+    position: absolute;
+    top: 120px;
+    left: 30px;
 }
 </style>
