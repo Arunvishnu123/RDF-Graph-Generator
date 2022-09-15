@@ -7,6 +7,19 @@ create multiples triples. Also, only triples approved by other registered users 
 RDF Graphs. Possibility to edit and delete the created triples. Using the software, the user can
 able to invite new users or make discussion.
 
+## Results 
+
+![ScreenShot](images/ui1.PNG)
+![ScreenShot](images/ui2.PNG)
+![ScreenShot](images/ui3.PNG.PNG)
+![ScreenShot](images/ui5.PNG)
+![ScreenShot](images/ui6.PNG)
+![ScreenShot](images/ui7.PNG)
+![ScreenShot](images/ui8.PNG)
+![ScreenShot](images/ui9.PNG)
+![ScreenShot](images/ui10.PNG)
+
+
 ### Class diagram
 ![ScreenShot](images/classdirgram.PNG)
 
@@ -23,18 +36,6 @@ able to invite new users or make discussion.
 ### Deployment diagram
 
 ![ScreenShot](images/deploymentdiragram.PNG)
-
-## Results 
-
-![ScreenShot](images/ui1.PNG)
-![ScreenShot](images/ui2.PNG)
-![ScreenShot](images/ui3.PNG.PNG)
-![ScreenShot](images/ui5.PNG)
-![ScreenShot](images/ui6.PNG)
-![ScreenShot](images/ui7.PNG)
-![ScreenShot](images/ui8.PNG)
-![ScreenShot](images/ui9.PNG)
-![ScreenShot](images/ui10.PNG)
 
 
 
