@@ -11,7 +11,7 @@ able to invite new users or make discussion.
 
 ![ScreenShot](images/ui1.PNG)
 ![ScreenShot](images/ui2.PNG)
-![ScreenShot](images/ui3.PNG.PNG)
+![ScreenShot](images/ui3.PNG)
 ![ScreenShot](images/ui5.PNG)
 ![ScreenShot](images/ui6.PNG)
 ![ScreenShot](images/ui7.PNG)
